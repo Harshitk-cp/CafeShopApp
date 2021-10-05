@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523126899077",
+    "project_id": "cafe-shop-app-74437",
+    "storage_bucket": "cafe-shop-app-74437.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523126899077:android:b58067013241802c5644ec",
+        "android_client_info": {
+          "package_name": "com.harshit.cafeshopapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523126899077-aiq4nenkv21l2bio0t24cdblga9855v2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR37PFlcwuO8IYZStbvM_rRjxuGS3eQBo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523126899077-aiq4nenkv21l2bio0t24cdblga9855v2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
