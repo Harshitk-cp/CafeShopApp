@@ -1,12 +1,17 @@
 package com.harshit.cafeshopapp.activity.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,6 +68,22 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
         }));
 
 
+        CoffeeModel coffeeModel = new CoffeeModel();
+        holder.itemCoffee.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                final Dialog dialog = new Dialog(view.getContext());
+                dialog.setContentView(R.layout.custom_dialog_coffee);
+                dialog.show();
+                Window window = dialog.getWindow();
+                window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                TextView txtDialogCoffeeDesc;
+                txtDialogCoffeeDesc = dialog.findViewById(R.id.txtDialogCoffeeDesc);
+                txtDialogCoffeeDesc.setText(new StringBuilder().append(coffeeModelList.get(position).getName()));
+                return true;
+            }
+        });
 
     }
 
@@ -134,6 +155,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
         TextView txtPrice;
         @BindView(R.id.itemCoffee)
         View itemCoffee;
+
 
         IRecyclerViewClickListener listener;
 

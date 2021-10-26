@@ -45,7 +45,7 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
 
     }
 
-    CoffeeModel coffeeModel;
+
 
     @Override
     public void onBindViewHolder(@NonNull MyCartViewHolder holder, int position) {
