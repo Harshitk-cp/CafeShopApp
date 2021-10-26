@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.DashboardActivity"
+    tools:context=".activity.activity.DashboardActivity"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -21,7 +21,11 @@
             android:background="@color/dark"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -38,6 +42,9 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
+
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

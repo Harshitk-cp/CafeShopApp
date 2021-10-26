@@ -1,4 +1,4 @@
-package com.harshit.cafeshopapp.activity;
+package com.harshit.cafeshopapp.activity.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;

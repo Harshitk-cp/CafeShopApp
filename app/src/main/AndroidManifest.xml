@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeShopApp">
         <activity
-            android:name=".activity.SplashScreen"
+            android:name=".activity.activity.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.activity.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,19 +25,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.activity.RegisterActivity"
             android:enabled="true"
             android:exported="true"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
-            android:name=".activity.DashboardActivity"
+            android:name=".activity.activity.DashboardActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.activity.LoginActivity"
             android:exported="true"
-            android:noHistory="true">
-
-        </activity>
+            android:noHistory="true"></activity>
     </application>
 
 </manifest>

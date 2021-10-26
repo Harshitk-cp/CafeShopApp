@@ -1,4 +1,4 @@
-package com.harshit.cafeshopapp.activity;
+package com.harshit.cafeshopapp.activity.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,7 +16,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,10 +36,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     FirebaseAuth mAuth;
     NavigationView navigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coffee_lists);
+        setContentView(R.layout.activity_dashboard);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -57,6 +62,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -162,8 +169,5 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+
 }
