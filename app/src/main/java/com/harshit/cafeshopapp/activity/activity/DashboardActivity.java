@@ -16,17 +16,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.harshit.cafeshopapp.R;
-import com.harshit.cafeshopapp.activity.fragments.FaqsFragment;
+import com.harshit.cafeshopapp.activity.fragments.FavFragment;
 import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
 import com.harshit.cafeshopapp.activity.fragments.ProfileFragment;
 
@@ -78,7 +74,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_FAQs:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FaqsFragment()).commit();
+                        new FavFragment()).commit();
                 getSupportActionBar().setTitle("FAQs");
                 break;
             case R.id.nav_logout:

@@ -1,5 +1,6 @@
 package com.harshit.cafeshopapp.activity.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
+import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
 import com.harshit.cafeshopapp.activity.model.CartModel;
 import com.harshit.cafeshopapp.activity.model.CoffeeModel;
 import com.harshit.cafeshopapp.activity.listener.ICartLoadListener;
@@ -54,10 +57,11 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
     @Override
     public MyCoffeeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MyCoffeeViewHolder(LayoutInflater.from(context).inflate(R.layout.coffee_list_item_design, parent, false));
+
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyCoffeeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyCoffeeViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.txtCoffeeName.setText(new StringBuilder().append(coffeeModelList.get(position).getName()));
         holder.txtPrice.setText(new StringBuilder("Rs.").append(coffeeModelList.get(position).getPrices()));
@@ -67,8 +71,6 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
             addToCart(coffeeModelList.get(position));
         }));
 
-
-        CoffeeModel coffeeModel = new CoffeeModel();
         holder.itemCoffee.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -84,6 +86,8 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
                 return true;
             }
         });
+
+        HomeFragment.mProgressDialog.dismiss();
 
     }
 
@@ -155,6 +159,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
         TextView txtPrice;
         @BindView(R.id.itemCoffee)
         View itemCoffee;
+
 
 
         IRecyclerViewClickListener listener;
