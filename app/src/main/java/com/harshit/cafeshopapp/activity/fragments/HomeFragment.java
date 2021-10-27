@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -176,7 +177,7 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
     @Override
     public void onCartLoadFailed(String message) {
-        Toast.makeText(this.getContext(), "items added to cart", Toast.LENGTH_SHORT).show();
+        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -187,7 +188,7 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
     @Override
     public void onCoffeeLoadFailed(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -228,6 +229,6 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
     @Override
     public void onFavLoadFailed(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 }
