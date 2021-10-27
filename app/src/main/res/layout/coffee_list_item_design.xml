@@ -70,7 +70,7 @@
                 android:layout_height="27dp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
-                android:background="@drawable/fav_outline"
+                android:background="@drawable/fav_background"
                 android:tag="unliked" />
 
             <TextView

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,14 +29,18 @@ import com.harshit.cafeshopapp.activity.model.FavModel;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 public class FavFragment extends Fragment implements IFavLoadListener {
 
     RecyclerView rvFav;
     IFavLoadListener favLoadListener;
+    TextView txtFavourite;
 
     @Nullable
     @Override
@@ -53,6 +61,7 @@ public class FavFragment extends Fragment implements IFavLoadListener {
                 android.R.color.transparent
         );
 
+
         return view;
 
     }
@@ -64,6 +73,7 @@ public class FavFragment extends Fragment implements IFavLoadListener {
         List<FavModel> favModels = new ArrayList<>();
         FirebaseDatabase.getInstance()
                 .getReference("favs")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override

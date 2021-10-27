@@ -73,14 +73,17 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
         FavFragment.mProgressDialog.dismiss();
 
     }
+    
 
     private void deleteFavFromFirebase(FavModel favModel) {
 
         FirebaseDatabase.getInstance()
                 .getReference("favs")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(favModel.getKey())
                 .removeValue()
                 .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
+
 
     }
 

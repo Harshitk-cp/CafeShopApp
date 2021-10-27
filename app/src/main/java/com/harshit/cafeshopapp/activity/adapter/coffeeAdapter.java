@@ -3,17 +3,17 @@ package com.harshit.cafeshopapp.activity.adapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,13 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
+import com.harshit.cafeshopapp.activity.fragments.FavFragment;
 import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
+import com.harshit.cafeshopapp.activity.listener.IFavLoadListener;
 import com.harshit.cafeshopapp.activity.model.CartModel;
 import com.harshit.cafeshopapp.activity.model.CoffeeModel;
 import com.harshit.cafeshopapp.activity.listener.ICartLoadListener;
 import com.harshit.cafeshopapp.activity.listener.IRecyclerViewClickListener;
+import com.harshit.cafeshopapp.activity.model.FavModel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +50,14 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
     private Context context;
     private List<CoffeeModel> coffeeModelList;
     private ICartLoadListener iCartLoadListener;
+    private IFavLoadListener iFavLoadListener;
+    private TextView txtFavourite;
 
-    public coffeeAdapter(Context context, List<CoffeeModel> coffeeModelList, ICartLoadListener iCartLoadListener) {
+    public coffeeAdapter(Context context, List<CoffeeModel> coffeeModelList, ICartLoadListener iCartLoadListener, IFavLoadListener iFavLoadListener) {
         this.context = context;
         this.coffeeModelList = coffeeModelList;
         this.iCartLoadListener = iCartLoadListener;
+        this.iFavLoadListener = iFavLoadListener;
     }
 
     @NonNull
@@ -87,7 +94,86 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
             }
         });
 
+        holder.txtFavorite.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View view) {
+
+                addToFavs(coffeeModelList.get(position));
+
+            }
+        });
+
+
+
         HomeFragment.mProgressDialog.dismiss();
+
+    }
+
+
+    private void deleteFromFavs(FavModel favModel) {
+
+        FirebaseDatabase.getInstance()
+                .getReference("favs")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(favModel.getKey())
+                .removeValue()
+                .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
+
+
+    }
+
+    private void addToFavs(CoffeeModel coffeeModel) {
+
+
+
+        DatabaseReference userFavs = FirebaseDatabase
+                .getInstance()
+                .getReference("favs")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        userFavs.child(coffeeModel.getKey())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+
+
+                            FavModel favModel = snapshot.getValue(FavModel.class);
+                            deleteFromFavs(favModel);
+                            iFavLoadListener.onFavLoadFailed("Item removed from Favourites");
+
+
+
+                        }
+                        else{
+
+                            FavModel favModel = new FavModel();
+                            favModel.setKey(coffeeModel.getKey());
+                            favModel.setName(coffeeModel.getName());
+                            favModel.setPrices(coffeeModel.getPrices());
+
+
+
+
+
+
+                            userFavs.child(coffeeModel.getKey())
+                                    .setValue(favModel)
+                                    .addOnSuccessListener(aVoid -> {
+                                        iFavLoadListener.onFavLoadFailed("Item added to Favourites");
+                                    })
+                                    .addOnFailureListener(e -> iFavLoadListener.onFavLoadFailed(e.getMessage()));
+
+                        }
+                        EventBus.getDefault().postSticky(new updatecartEvent());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        iFavLoadListener.onFavLoadFailed(error.getMessage());
+                    }
+                });
 
     }
 
@@ -159,28 +245,41 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
         TextView txtPrice;
         @BindView(R.id.itemCoffee)
         View itemCoffee;
+        @BindView(R.id.txtFavorite)
+        TextView txtFavorite;
 
 
 
         IRecyclerViewClickListener listener;
 
+
+
+
         public void setListener(IRecyclerViewClickListener listener) {
             this.listener = listener;
         }
+
 
         private Unbinder unbinder;
         public MyCoffeeViewHolder(@NonNull View itemView) {
             super(itemView);
             unbinder = ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+
+
+
         }
 
 
         @Override
         public void onClick(View view) {
             listener.onRecyclerClick(view, getAdapterPosition());
+
+
         }
     }
+
+
 
 
 

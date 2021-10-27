@@ -26,11 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.activity.CartActivity;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
+import com.harshit.cafeshopapp.activity.listener.IFavLoadListener;
 import com.harshit.cafeshopapp.activity.model.CartModel;
 import com.harshit.cafeshopapp.activity.model.CoffeeModel;
 import com.harshit.cafeshopapp.activity.adapter.coffeeAdapter;
 import com.harshit.cafeshopapp.activity.listener.ICartLoadListener;
 import com.harshit.cafeshopapp.activity.listener.ICoffeeLoadListener;
+import com.harshit.cafeshopapp.activity.model.FavModel;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,11 +46,12 @@ import java.util.Objects;
 import butterknife.BindView;
 
 
-public class HomeFragment extends Fragment implements ICartLoadListener, ICoffeeLoadListener {
+public class HomeFragment extends Fragment implements ICartLoadListener, ICoffeeLoadListener, IFavLoadListener {
 
     RecyclerView rvHome;
     ICartLoadListener cartLoadListener;
     ICoffeeLoadListener coffeeLoadListener;
+    IFavLoadListener favLoadListener;
     NotificationBadge badge;
 
 
@@ -85,6 +88,8 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
         return view;
 
     }
+
+
 
     public static ProgressDialog mProgressDialog;
 
@@ -129,7 +134,7 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
         cartLoadListener = HomeFragment.this;
         coffeeLoadListener = HomeFragment.this;
-
+        favLoadListener  = HomeFragment.this;
 
 
 
@@ -176,7 +181,7 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
     @Override
     public void onCoffeeLoadSuccess(List<CoffeeModel> coffeeModelList) {
-        coffeeAdapter adapter = new coffeeAdapter(this.getContext(), coffeeModelList, cartLoadListener);
+        coffeeAdapter adapter = new coffeeAdapter(this.getContext(), coffeeModelList, cartLoadListener, favLoadListener);
         rvHome.setAdapter(adapter);
     }
 
@@ -214,5 +219,15 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
 
                     }
                 });
+    }
+
+    @Override
+    public void onFavLoadSuccess(List<FavModel> favModelList) {
+
+    }
+
+    @Override
+    public void onFavLoadFailed(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

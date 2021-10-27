@@ -8,6 +8,7 @@ public class FavModel {
 
     }
 
+
     public String getKey() {
         return key;
     }
