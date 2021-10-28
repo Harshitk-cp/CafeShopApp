@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeShopApp">
         <activity
+            android:name=".activity.activity.PlaceOrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.activity.CartActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
         <activity
             android:name=".activity.activity.LoginActivity"
             android:exported="true"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
     </application>
 
 </manifest>

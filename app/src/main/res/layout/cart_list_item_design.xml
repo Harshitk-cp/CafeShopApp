@@ -11,6 +11,7 @@
         android:id="@+id/llContentCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/grey"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -36,11 +37,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ellipsize="end"
+                android:fontFamily="@font/new_font"
                 android:maxLines="2"
                 android:padding="5dp"
-                android:text="Pind Tadka"
+                android:text="coffee"
                 android:textColor="@color/light"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtPriceCart"
@@ -51,6 +54,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="@font/new_font"
                 android:padding="6dp"
                 android:text="300/-"
                 android:textColor="@color/light"

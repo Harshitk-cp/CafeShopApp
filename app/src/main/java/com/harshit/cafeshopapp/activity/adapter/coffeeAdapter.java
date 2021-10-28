@@ -217,7 +217,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
                             userCart.child(coffeeModel.getKey())
                                     .setValue(cartModel)
                                     .addOnSuccessListener(aVoid -> {
-                                        iCartLoadListener.onCartLoadFailed("Add to cart Success");
+                                        iCartLoadListener.onCartLoadFailed("Item added to cart");
                                     })
                                     .addOnFailureListener(e -> iCartLoadListener.onCartLoadFailed(e.getMessage()));
 

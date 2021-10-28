@@ -4,20 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,72 +27,36 @@ import com.harshit.cafeshopapp.activity.model.CartModel;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CartActivity extends AppCompatActivity implements ICartLoadListener {
-
-
-    @BindView(R.id.txtTextTotalPrice)
-    TextView txtTextTotalPrice;
-
+public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadListener{
 
     ICartLoadListener cartLoadListener;
-    RecyclerView rvCart;
-    TextView txtProceedToPay;
-    ImageView imgEmptyCartIcon;
-    TextView txtEmptyCartText;
-
-    ConstraintLayout totalPriceBar;
-
+    RecyclerView rvPreview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_place_order);
 
-        rvCart = findViewById(R.id.rvCart);
-        imgEmptyCartIcon = findViewById(R.id.imgEmptyCartIcon);
-        txtEmptyCartText = findViewById(R.id.txtEmptyCartText);
-        totalPriceBar = findViewById(R.id.totalPriceBar);
+        rvPreview = findViewById(R.id.rvPreview);
 
-        Toolbar actionBarCart = findViewById(R.id.actionBarCart);
+        Toolbar actionBarCart = findViewById(R.id.actionBarInfo);
         setSupportActionBar(actionBarCart);
         ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setTitle("Cart");
+        getSupportActionBar().setTitle("Place Order");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-        txtProceedToPay = findViewById(R.id.txtProceedToPay);
-        txtProceedToPay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myintent = new Intent(CartActivity.this, PlaceOrderActivity.class);
-                startActivity(myintent);
-            }
-        });
-
         init();
-        loadCartFromFirebase();
-        
+        loadPreviewFromFirebase();
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()== android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void loadCartFromFirebase() {
-
+    private void loadPreviewFromFirebase() {
         List<CartModel> cartModels = new ArrayList<>();
 
         FirebaseDatabase.getInstance()
@@ -125,21 +84,24 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
                         cartLoadListener.onCartLoadFailed(error.getMessage());
                     }
                 });
-
     }
 
     private void init(){
         ButterKnife.bind(this);
         cartLoadListener = this;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rvCart.setLayoutManager(layoutManager);
+        rvPreview.setLayoutManager(layoutManager);
 
-        rvCart.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+        rvPreview.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
 
+    }
 
-
-
-
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()== android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -160,37 +122,18 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onUpdateCart(updatecartEvent event)
     {
-        loadCartFromFirebase();
+        loadPreviewFromFirebase();
     }
-
 
 
     @Override
     public void onCartLoadSuccess(List<CartModel> cartModelList) {
-        double sum = 0;
-        for(CartModel cartModel: cartModelList)
-        {
-            sum += cartModel.getTotalPrice();
-        }
 
-        txtTextTotalPrice.setText(new StringBuilder("Total Price-> Rs. ").append(sum));
         cartAdapter cartAdapter = new cartAdapter(this, cartModelList);
 
-        if(cartAdapter == null)
-        {
-            txtEmptyCartText.setVisibility(View.VISIBLE);
-            imgEmptyCartIcon.setVisibility(View.VISIBLE);
-            totalPriceBar.setVisibility(View.GONE);
 
-        }
-        else
-        {
-            totalPriceBar.setVisibility(View.VISIBLE);
-            txtEmptyCartText.setVisibility(View.GONE);
-            imgEmptyCartIcon.setVisibility(View.GONE);
-        }
 
-        rvCart.setAdapter(cartAdapter);
+        rvPreview.setAdapter(cartAdapter);
     }
 
     @Override

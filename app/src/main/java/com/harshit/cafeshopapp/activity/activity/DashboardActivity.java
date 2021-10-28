@@ -72,7 +72,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         new ProfileFragment()).commit();
                 getSupportActionBar().setTitle("Profile");
                 break;
-            case R.id.nav_FAQs:
+            case R.id.nav_favs:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new FavFragment()).commit();
                 getSupportActionBar().setTitle("FAQs");

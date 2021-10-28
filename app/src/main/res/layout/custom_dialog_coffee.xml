@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
+        android:fontFamily="@font/new_font"
         android:layout_marginLeft="15dp"
         android:text="Coffee is made from the roasted and ground seeds, or beans, of the coffee plant, a tropical evergreen shrub. Two of the 25 or more species, Arabica and Robusta, supply most of the world's coffee."
         android:textColor="@color/black"
