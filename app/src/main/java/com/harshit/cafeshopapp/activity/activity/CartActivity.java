@@ -71,6 +71,8 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
         actionBar.setDisplayHomeAsUpEnabled(true);
 
 
+
+
         txtProceedToPay = findViewById(R.id.txtProceedToPay);
         txtProceedToPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,9 +84,11 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
 
         init();
         loadCartFromFirebase();
-        
+
 
     }
+
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== android.R.id.home) {
@@ -125,6 +129,8 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
                 });
 
     }
+
+
 
     private void init(){
         ButterKnife.bind(this);
@@ -195,4 +201,6 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
     public void onCartLoadFailed(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+
 }

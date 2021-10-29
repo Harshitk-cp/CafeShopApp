@@ -45,7 +45,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     NavigationView navigationView;
 
 
-    DatabaseReference userName;
+
     private CartModel cartModelList;
 
 
@@ -63,10 +63,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUserName = (TextView) headerView.findViewById(R.id.navUserName);
 
-        navUserName.setText("Kage");
+
+
+        setUserName();
 
 
 
@@ -85,8 +85,38 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
+    private void setUserName() {
+
+        FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("1")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if(snapshot.exists())
+                        {
+                            for(DataSnapshot userSnapshot: snapshot.getChildren())
+                            {
+                                UserModel userModel = userSnapshot.getValue(UserModel.class);
+                                View headerView = navigationView.getHeaderView(0);
+                                TextView navUserName = (TextView) headerView.findViewById(R.id.navUserName);
+                                navUserName.setText(new StringBuilder().append(userModel.getName()));
+                            }
+                        }else{
+                            Toast.makeText(DashboardActivity.this, "hah error", Toast.LENGTH_SHORT).show();
+                        }
 
 
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        System.out.println("hah error");
+                    }
+                });
+
+    }
 
 
     @Override

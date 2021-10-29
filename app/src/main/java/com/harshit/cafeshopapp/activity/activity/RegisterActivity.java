@@ -68,12 +68,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         userDatabase = FirebaseDatabase
                 .getInstance().getReference("user")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("1");
 
         String userName = etRegisterName.getText().toString();
 
 
-        UserModel userModels = new UserModel(null, userName, null, null, null, null);
+        UserModel userModels = new UserModel();
+        userModels.setName(userName);
 
 
         userDatabase.push().setValue(userModels);

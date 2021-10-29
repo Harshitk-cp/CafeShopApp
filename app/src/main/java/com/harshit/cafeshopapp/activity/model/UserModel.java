@@ -2,10 +2,10 @@ package com.harshit.cafeshopapp.activity.model;
 
 public class UserModel {
 
-    private String key, name, address, city, state, zip;
+    private String key, address, city, name, state, zip;
 
 
-    public UserModel(String key, String name, String address, String city, String state, String zip) {
+    public UserModel(String key, String address, String city, String name, String state, String zip) {
 
         this.key = key;
         this.name = name;
@@ -15,7 +15,9 @@ public class UserModel {
         this.zip = zip;
     }
 
+    public UserModel(){
 
+    }
 
 
     public String getKey() {

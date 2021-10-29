@@ -75,7 +75,8 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
 
         userDatabase = FirebaseDatabase
                 .getInstance().getReference("user")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("2");
 
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +114,11 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
         String userState = etStateInfo.getText().toString();
         String userZip = etZipInfo.getText().toString();
 
-        UserModel userModels = new UserModel(null, null,  userAddress, userCity, userState, userZip);
+        UserModel userModels = new UserModel();
+        userModels.setAddress(userAddress);
+        userModels.setCity(userCity);
+        userModels.setState(userState);
+        userModels.setZip(userZip);
 
         userDatabase.push().setValue(userModels);
 
