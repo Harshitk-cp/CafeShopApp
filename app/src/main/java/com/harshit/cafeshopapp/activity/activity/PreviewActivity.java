@@ -8,21 +8,26 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
-import com.harshit.cafeshopapp.activity.adapter.cartAdapter;
+import com.harshit.cafeshopapp.activity.adapter.previewAdapter;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
 import com.harshit.cafeshopapp.activity.listener.ICartLoadListener;
 import com.harshit.cafeshopapp.activity.model.CartModel;
+import com.harshit.cafeshopapp.activity.model.UserModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,10 +38,18 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
-public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadListener{
+public class PreviewActivity extends AppCompatActivity implements ICartLoadListener{
 
     ICartLoadListener cartLoadListener;
     RecyclerView rvPreview;
+    EditText etNameInfo;
+    EditText etAddressInfo;
+    EditText etCityInfo;
+    EditText etStateInfo;
+    EditText etZipInfo;
+    Button btnPlaceOrder;
+    DatabaseReference userDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +57,12 @@ public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadLi
         setContentView(R.layout.activity_place_order);
 
         rvPreview = findViewById(R.id.rvPreview);
+        etNameInfo = findViewById(R.id.etnameInfo);
+        etAddressInfo = findViewById(R.id.etAddressInfo);
+        etCityInfo = findViewById(R.id.etCityInfo);
+        etStateInfo   = findViewById(R.id.etStateInfo);
+        etZipInfo = findViewById(R.id.etZipInfo);
+        btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
 
         Toolbar actionBarCart = findViewById(R.id.actionBarInfo);
         setSupportActionBar(actionBarCart);
@@ -53,6 +72,50 @@ public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadLi
 
         init();
         loadPreviewFromFirebase();
+
+        userDatabase = FirebaseDatabase
+                .getInstance().getReference("user")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(etNameInfo.getText().toString().isEmpty()) {
+                    etNameInfo.setError("Your name is required");
+                }else if(etAddressInfo.getText().toString().isEmpty()) {
+                    etAddressInfo.setError("Address cannot be empty");
+                }else if(etCityInfo.getText().toString().isEmpty()) {
+                    etCityInfo.setError("required field");
+                }else if(etStateInfo.getText().toString().isEmpty()) {
+                    etStateInfo.setError("required field");
+                }else if(etZipInfo.getText().toString().isEmpty()) {
+                    etZipInfo.setError("required field");
+                }else{
+                    insertUserData();
+                    Toast.makeText(PreviewActivity.this, "your order was placed succesfully!!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(PreviewActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                }
+
+
+
+            }
+        });
+
+    }
+
+    private void insertUserData() {
+
+
+        String userAddress = etAddressInfo.getText().toString();
+        String userCity = etCityInfo.getText().toString();
+        String userState = etStateInfo.getText().toString();
+        String userZip = etZipInfo.getText().toString();
+
+        UserModel userModels = new UserModel(null, null,  userAddress, userCity, userState, userZip);
+
+        userDatabase.push().setValue(userModels);
 
     }
 
@@ -91,8 +154,9 @@ public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadLi
         cartLoadListener = this;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvPreview.setLayoutManager(layoutManager);
-
         rvPreview.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+
+
 
     }
 
@@ -129,11 +193,9 @@ public class PlaceOrderActivity extends AppCompatActivity implements ICartLoadLi
     @Override
     public void onCartLoadSuccess(List<CartModel> cartModelList) {
 
-        cartAdapter cartAdapter = new cartAdapter(this, cartModelList);
+        previewAdapter previewAdapter = new previewAdapter(this, cartModelList);
 
-
-
-        rvPreview.setAdapter(cartAdapter);
+        rvPreview.setAdapter(previewAdapter);
     }
 
     @Override

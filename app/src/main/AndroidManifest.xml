@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CafeShopApp">
         <activity
-            android:name=".activity.activity.PlaceOrderActivity"
+            android:name=".activity.activity.PreviewActivity"
             android:exported="false" />
         <activity
             android:name=".activity.activity.CartActivity"

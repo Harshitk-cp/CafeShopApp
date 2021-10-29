@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +31,6 @@ import com.harshit.cafeshopapp.activity.model.CartModel;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +75,7 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
         txtProceedToPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myintent = new Intent(CartActivity.this, PlaceOrderActivity.class);
+                Intent myintent = new Intent(CartActivity.this, PreviewActivity.class);
                 startActivity(myintent);
             }
         });

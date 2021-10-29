@@ -17,20 +17,36 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.fragments.FavFragment;
 import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
 import com.harshit.cafeshopapp.activity.fragments.ProfileFragment;
+import com.harshit.cafeshopapp.activity.model.CartModel;
+import com.harshit.cafeshopapp.activity.model.UserModel;
+
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
     FirebaseAuth mAuth;
     NavigationView navigationView;
+
+
+    DatabaseReference userName;
+    private CartModel cartModelList;
 
 
     @Override
@@ -47,6 +63,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUserName = (TextView) headerView.findViewById(R.id.navUserName);
+
+        navUserName.setText("Kage");
+
+
+
+
+
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,6 +84,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
     }
+
+
 
 
 

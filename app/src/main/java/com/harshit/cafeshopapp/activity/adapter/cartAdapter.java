@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
+import com.harshit.cafeshopapp.activity.activity.CartActivity;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
 import com.harshit.cafeshopapp.activity.model.CartModel;
 import com.harshit.cafeshopapp.activity.model.CoffeeModel;
@@ -75,11 +76,17 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
 
                         deleteFromFirebase(cartModelList.get(position));
                         dialog12.dismiss();
+
+
+
+
                     }).create();
             dialog.show();
         });
         
     }
+
+
 
     private void deleteFromFirebase(CartModel cartModel) {
 

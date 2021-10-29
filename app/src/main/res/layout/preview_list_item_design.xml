@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/itemPreview"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="4dp"
+    android:background="#ffffff"
+    app:cardCornerRadius="6dp">
+
+    <LinearLayout
+        android:id="@+id/llContentPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <ImageView
+            android:id="@+id/imgCoffeeImagePreview"
+            android:layout_width="20dp"
+            android:layout_height="70dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.3"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/coffee" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.6"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtCoffeeNamePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/new_font"
+                android:maxLines="1"
+                android:padding="3dp"
+                android:text="Pind Tadka"
+                android:textColor="@color/light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtPricePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtCoffeeNamePreview"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/new_font"
+                android:padding="6dp"
+                android:text="300/-"
+                android:textColor="@color/light"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

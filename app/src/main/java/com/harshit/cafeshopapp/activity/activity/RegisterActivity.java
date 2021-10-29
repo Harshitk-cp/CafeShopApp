@@ -3,20 +3,28 @@ package com.harshit.cafeshopapp.activity.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
+import com.harshit.cafeshopapp.activity.model.UserModel;
 
 public class RegisterActivity extends AppCompatActivity {
 
     Button btnRegister;
     EditText etRegisterEmail;
     EditText etRegisterPassword;
+    EditText etRegisterName;
 
-     FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    DatabaseReference userDatabase;
+
 
 
     @Override
@@ -27,12 +35,48 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         etRegisterEmail = findViewById(R.id.etRegisterEmail);
         etRegisterPassword = findViewById(R.id.etRegisterPassword);
+        etRegisterName = findViewById(R.id.etRegisterName);
 
         mAuth = FirebaseAuth.getInstance();
 
+
+
         btnRegister.setOnClickListener(view -> {
             createUser();
+            if(etRegisterName.getText().toString().isEmpty())
+            {
+                etRegisterName.setError("Your name is required");
+            }else{
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        insertUserData();
+                    }
+                }, 3000);
+
+
+            }
+
         });
+
+
+
+    }
+
+    private void insertUserData() {
+
+        userDatabase = FirebaseDatabase
+                .getInstance().getReference("user")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        String userName = etRegisterName.getText().toString();
+
+
+        UserModel userModels = new UserModel(null, userName, null, null, null, null);
+
+
+        userDatabase.push().setValue(userModels);
 
     }
 
@@ -47,7 +91,8 @@ public class RegisterActivity extends AppCompatActivity {
             etRegisterPassword.setError("Password cannot be empty..");
             etRegisterPassword.requestFocus();
         }else{
-            mAuth.createUserWithEmailAndPassword(registerEmail, registerPassword).addOnCompleteListener(this, task -> {
+            mAuth.createUserWithEmailAndPassword(registerEmail, registerPassword)
+                    .addOnCompleteListener(this, task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(RegisterActivity.this, "User registered Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
