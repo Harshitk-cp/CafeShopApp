@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:background="@color/primaryLight"
+    android:background="@color/primary"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
@@ -13,22 +13,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/user_icon" />
+        android:src="@drawable/user_icon"
+        android:tint="#FFFFFF" />
 
     <TextView
         android:id="@+id/navUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/new_font"
-        android:maxLines="1"
         android:layout_gravity="center"
         android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/roboto_font"
+        android:maxLines="1"
         android:paddingTop="8dp"
         android:text="UserName"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
         android:textSize="18sp" />
-
 
 
 </LinearLayout>
