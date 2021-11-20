@@ -26,6 +26,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -36,7 +42,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-database:20.0.2'
-    testImplementation 'junit:junit:'
 
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.firebaseui:firebase-ui-database:6.3.0'
@@ -46,6 +51,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.2.0'
 
     implementation 'com.jakewharton:butterknife:10.2.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

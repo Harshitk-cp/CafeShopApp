@@ -1,49 +1,59 @@
 package com.harshit.cafeshopapp.activity.model;
 
 public class CoffeeModel {
+    private String _key;
+    private String _name;
+    private String _description;
+    private String _price;
 
-    public String key;
-    public String description;
-    public String name;
-    public String prices;
+    public CoffeeModel() {}
 
-    public CoffeeModel(){
-
+    public CoffeeModel(String key, String name, String description, String price) {
+        this._key = key;
+        this._name = name;
+        this._description = description;
+        this._price = price;
     }
 
-    public CoffeeModel(String description, String name, String prices) {
-        this.description = description;
-        this.name = name;
-        this.prices = prices;
-    }
-
-    public String getKey() { return key; }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPrices() {
-        return prices;
+    public String getKey() {
+        return this._key;
     }
 
     public void setKey(String key) {
-        this.key = key;
+        if (!key.isEmpty()) {
+            this._key = key;
+        }
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getName() {
+        return this._name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (!name.isEmpty()) {
+            this._name = name;
+        }
+    }
+
+    public String getDescription() {
+        return this._description;
+    }
+
+    public void setDescription(String description) {
+        if (!description.isEmpty()) {
+            this._description = description;
+        }
+    }
+
+    public String getPrices() {
+        return this._price;
     }
 
     public void setPrices(String price) {
-        this.prices = price;
+        double n = Double.parseDouble(price);
+        if (n < 0.0) {
+            throw new ArithmeticException("Price cannot be negative.");
+        }
+        this._price = price;
     }
 }
