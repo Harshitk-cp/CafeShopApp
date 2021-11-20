@@ -13,29 +13,20 @@ import android.widget.TextView;
 import com.harshit.cafeshopapp.R;
 
 public class SplashScreen extends AppCompatActivity {
-
-    Animation topAnim;
-    ImageView imgLogo;
-    TextView txtLogo;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash_screen);
 
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        Animation slideFromBottom = AnimationUtils.loadAnimation(this, R.anim.slide_from_bottom);
+        ImageView cafeLogo = findViewById(R.id.cafeLogo);
+        TextView cafeLogoText = findViewById(R.id.cafeLogoText);
 
-
-
-        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        imgLogo = findViewById(R.id.imgLogo);
-        txtLogo = findViewById(R.id.txtLogo);
-
-        topAnim.setAnimationListener(new Animation.AnimationListener() {
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
+            public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -44,15 +35,10 @@ public class SplashScreen extends AppCompatActivity {
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
+            public void onAnimationRepeat(Animation animation) {}
         });
 
-        txtLogo.startAnimation(topAnim);
-        imgLogo.startAnimation(topAnim);
-
+        cafeLogo.startAnimation(fadeIn);
+        cafeLogoText.startAnimation(slideFromBottom);
     }
-
-
 }

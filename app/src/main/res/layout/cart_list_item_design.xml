@@ -41,7 +41,7 @@
                 android:maxLines="2"
                 android:padding="5dp"
                 android:text="coffee"
-                android:textColor="@color/light"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                 android:fontFamily="@font/new_font"
                 android:padding="6dp"
                 android:text="300/-"
-                android:textColor="@color/light"
+                android:textColor="@color/primaryLight"
                 android:textSize="14sp" />
 
         </RelativeLayout>

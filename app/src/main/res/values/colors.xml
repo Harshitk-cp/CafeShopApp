@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#b2dfdb</color>
-    <color name="light">#e5ffff</color>
-    <color name="dark">#82ada9</color>
-    <color name="grey">#272727</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="statusBarColor">#4f9a94</color>
+    <color name="primary">#955f31</color>
+    <color name="primaryLight">#D3A074</color>
+    <color name="primaryDark">#45230f</color>
+
+    <color name="secondary">#204d48</color>
+    <color name="secondaryLight">#3b555d</color>
+    <color name="secondaryDark">#233237</color>
+
+    <color name="black">#000000</color>
+    <color name="grey">#444444</color>
+    <color name="white">#FFFFFF</color>
 </resources>
