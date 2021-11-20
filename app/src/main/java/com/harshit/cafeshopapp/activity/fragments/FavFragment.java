@@ -37,107 +37,95 @@ import java.util.List;
 import butterknife.BindView;
 
 public class FavFragment extends Fragment implements IFavLoadListener {
+  RecyclerView rvFav;
+  IFavLoadListener favLoadListener;
+  TextView txtFavourite;
 
-    RecyclerView rvFav;
-    IFavLoadListener favLoadListener;
-    TextView txtFavourite;
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_fav, container, false);
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fav, container, false);
+    rvFav = view.findViewById(R.id.rvFav);
+    rvFav.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rvFav = view.findViewById(R.id.rvFav);
-        rvFav.setLayoutManager(new LinearLayoutManager(getContext()));
+    init();
+    loadFavsFromFirebase();
 
-        init();
-        loadFavsFromFirebase();
+    mProgressDialog = new ProgressDialog(this.getContext());
+    mProgressDialog.setCancelable(false);
+    mProgressDialog.show();
+    mProgressDialog.setContentView(R.layout.coffee_progress_layout);
+    mProgressDialog.getWindow().setBackgroundDrawableResource(
+      android.R.color.transparent
+    );
 
-        mProgressDialog = new ProgressDialog(this.getContext());
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-        mProgressDialog.setContentView(R.layout.coffee_progress_layout);
-        mProgressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
+    return view;
+  }
 
+  public static ProgressDialog mProgressDialog;
 
-        return view;
+  private void loadFavsFromFirebase() {
 
-    }
+    List<FavModel> favModels = new ArrayList<>();
+    FirebaseDatabase.getInstance()
+      .getReference("favs")
+      .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+      .addListenerForSingleValueEvent(new ValueEventListener() {
 
-    public static ProgressDialog mProgressDialog;
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-    private void loadFavsFromFirebase() {
+          if (snapshot.exists()) {
+            for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+              FavModel favModel = favSnapshot.getValue(FavModel.class);
+              favModel.setKey(favSnapshot.getKey());
+              favModels.add(favModel);
+            }
+            favLoadListener.onFavLoadSuccess(favModels);
+          } else
+            favLoadListener.onFavLoadFailed("Firebase load error");
+        }
 
-        List<FavModel> favModels = new ArrayList<>();
-        FirebaseDatabase.getInstance()
-                .getReference("favs")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+          favLoadListener.onFavLoadFailed(error.getMessage());
+        }
+      });
+  }
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+  private void init() {
 
-                        if(snapshot.exists())
-                        {
-                            for(DataSnapshot favSnapshot:snapshot.getChildren())
-                            {
-                                FavModel favModel = favSnapshot.getValue(FavModel.class);
-                                favModel.setKey(favSnapshot.getKey());
-                                favModels.add(favModel);
-                            }
-                            favLoadListener.onFavLoadSuccess(favModels);
-                        }
-                        else
-                            favLoadListener.onFavLoadFailed("Firebase load error");
+    favLoadListener = FavFragment.this;
+  }
 
-                    }
+  @Override
+  public void onStart() {
+    super.onStart();
+    EventBus.getDefault().register(this);
+  }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        favLoadListener.onFavLoadFailed(error.getMessage());
-                    }
-                });
-    }
+  @Override
+  public void onStop() {
+    if (EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
+      EventBus.getDefault().removeStickyEvent(updatecartEvent.class);
+    EventBus.getDefault().unregister(this);
+    super.onStop();
+  }
 
-    private void init() {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onUpdateCart(updatecartEvent event) {
+    loadFavsFromFirebase();
+  }
 
+  @Override
+  public void onFavLoadSuccess(List<FavModel> favModelList) {
+    favAdapter adapter = new favAdapter(this.getContext(), favModelList, favLoadListener);
+    rvFav.setAdapter(adapter);
+  }
 
-        favLoadListener = FavFragment.this;
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-
-    @Override
-    public void onStop() {
-        if(EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
-            EventBus.getDefault().removeStickyEvent(updatecartEvent.class);
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onUpdateCart(updatecartEvent event)
-    {
-        loadFavsFromFirebase();
-    }
-
-
-    @Override
-    public void onFavLoadSuccess(List<FavModel> favModelList) {
-        favAdapter adapter = new favAdapter(this.getContext(), favModelList, favLoadListener);
-        rvFav.setAdapter(adapter);
-    }
-
-    @Override
-    public void onFavLoadFailed(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
-    }
+  @Override
+  public void onFavLoadFailed(String message) {
+    Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+  }
 }

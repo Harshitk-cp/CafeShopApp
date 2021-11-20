@@ -29,53 +29,44 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class previewAdapter extends RecyclerView.Adapter<previewAdapter.MyPreviewViewHolder> {
+  private Context context;
+  private List<CartModel> cartModelList;
 
-    private Context context;
-    private List<CartModel> cartModelList;
+  public previewAdapter(Context context, List<CartModel> cartModelList) {
+    this.context = context;
+    this.cartModelList = cartModelList;
+  }
 
-    public previewAdapter(Context context, List<CartModel> cartModelList) {
-        this.context = context;
-        this.cartModelList = cartModelList;
+  @NonNull
+  @Override
+  public MyPreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    return new MyPreviewViewHolder(LayoutInflater.from(context).inflate(R.layout.preview_list_item_design, parent, false));
+  }
+
+  @Override
+  public void onBindViewHolder(@NonNull MyPreviewViewHolder holder, int position) {
+
+    holder.txtCoffeeNamePreview.setText(new StringBuilder().append(cartModelList.get(position).getName()));
+    holder.txtPricePreview.setText(new StringBuilder("Rs.").append(cartModelList.get(position).getPrices()));
+  }
+
+  @Override
+  public int getItemCount() {
+    return cartModelList.size();
+  }
+
+  public class MyPreviewViewHolder extends RecyclerView.ViewHolder {
+
+    @BindView(R.id.txtCoffeeNamePreview)
+    TextView txtCoffeeNamePreview;
+    @BindView(R.id.txtPricePreview)
+    TextView txtPricePreview;
+
+    Unbinder unbinder;
+
+    public MyPreviewViewHolder(@NonNull View itemView) {
+      super(itemView);
+      unbinder = ButterKnife.bind(this, itemView);
     }
-
-    @NonNull
-    @Override
-    public MyPreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyPreviewViewHolder(LayoutInflater.from(context).inflate(R.layout.preview_list_item_design, parent, false));
-
-
-
-    }
-
-
-
-    @Override
-    public void onBindViewHolder(@NonNull MyPreviewViewHolder holder, int position) {
-
-        holder.txtCoffeeNamePreview.setText(new StringBuilder().append(cartModelList.get(position).getName()));
-        holder.txtPricePreview.setText(new StringBuilder("Rs.").append(cartModelList.get(position).getPrices()));
-
-
-    }
-
-
-
-    @Override
-    public int getItemCount() {
-        return cartModelList.size();
-    }
-
-    public class MyPreviewViewHolder extends RecyclerView.ViewHolder{
-
-        @BindView(R.id.txtCoffeeNamePreview)
-        TextView txtCoffeeNamePreview;
-        @BindView(R.id.txtPricePreview)
-        TextView txtPricePreview;
-
-        Unbinder unbinder;
-        public MyPreviewViewHolder(@NonNull View itemView) {
-            super(itemView);
-            unbinder = ButterKnife.bind(this, itemView);
-        }
-    }
+  }
 }

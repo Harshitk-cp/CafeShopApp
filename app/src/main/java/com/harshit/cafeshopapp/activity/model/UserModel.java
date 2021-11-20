@@ -1,72 +1,67 @@
 package com.harshit.cafeshopapp.activity.model;
 
 public class UserModel {
+  private String key, address, city, name, state, zip;
 
-    private String key, address, city, name, state, zip;
+  public UserModel(String key, String address, String city, String name, String state, String zip) {
 
+    this.key = key;
+    this.name = name;
+    this.address = address;
+    this.city = city;
+    this.state = state;
+    this.zip = zip;
+  }
 
-    public UserModel(String key, String address, String city, String name, String state, String zip) {
+  public UserModel() {
 
-        this.key = key;
-        this.name = name;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-    }
+  }
 
-    public UserModel(){
+  public String getKey() {
+    return key;
+  }
 
-    }
+  public void setKey(String key) {
+    this.key = key;
+  }
 
+  public String getName() {
+    return name;
+  }
 
-    public String getKey() {
-        return key;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public String getAddress() {
-        return address;
-    }
+  public void setCity(String city) {
+    this.city = city;
+  }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+  public String getState() {
+    return state;
+  }
 
-    public String getCity() {
-        return city;
-    }
+  public String getZip() {
+    return zip;
+  }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+  public void setZip(String zip) {
+    this.zip = zip;
+  }
 
-    public String getState() {
-        return state;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-
+  public void setState(String state) {
+    this.state = state;
+  }
 }

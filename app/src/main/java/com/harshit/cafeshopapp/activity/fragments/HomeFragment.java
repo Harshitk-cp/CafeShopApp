@@ -46,189 +46,164 @@ import java.util.Objects;
 
 import butterknife.BindView;
 
-
 public class HomeFragment extends Fragment implements ICartLoadListener, ICoffeeLoadListener, IFavLoadListener {
+  RecyclerView rvHome;
+  ICartLoadListener cartLoadListener;
+  ICoffeeLoadListener coffeeLoadListener;
+  IFavLoadListener favLoadListener;
+  NotificationBadge badge;
 
-    RecyclerView rvHome;
-    ICartLoadListener cartLoadListener;
-    ICoffeeLoadListener coffeeLoadListener;
-    IFavLoadListener favLoadListener;
-    NotificationBadge badge;
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+    rvHome = view.findViewById(R.id.rvHome);
+    rvHome.setLayoutManager(new LinearLayoutManager(getContext()));
 
+    init();
+    loadCoffeeFromFirebase();
+    countCartItem();
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_home, container, false);
+    mProgressDialog = new ProgressDialog(this.getContext());
+    mProgressDialog.setCancelable(false);
+    mProgressDialog.show();
+    mProgressDialog.setContentView(R.layout.coffee_progress_layout);
+    mProgressDialog.getWindow().setBackgroundDrawableResource(
+      android.R.color.transparent
+    );
 
-        rvHome = view.findViewById(R.id.rvHome);
-        rvHome.setLayoutManager(new LinearLayoutManager(getContext()));
+    Button btnCart = view.findViewById(R.id.btnCart);
+    btnCart.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent myintent = new Intent(getActivity(), CartActivity.class);
+        startActivity(myintent);
+      }
+    });
 
-        init();
-        loadCoffeeFromFirebase();
-        countCartItem();
+    return view;
+  }
 
-        mProgressDialog = new ProgressDialog(this.getContext());
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
-        mProgressDialog.setContentView(R.layout.coffee_progress_layout);
-        mProgressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
+  public static ProgressDialog mProgressDialog;
 
-        Button btnCart = view.findViewById(R.id.btnCart);
-        btnCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myintent = new Intent(getActivity(), CartActivity.class);
-                startActivity(myintent);
+  private void loadCoffeeFromFirebase() {
+
+    List<CoffeeModel> coffeeModels = new ArrayList<>();
+    FirebaseDatabase.getInstance()
+      .getReference("coffees")
+      .addListenerForSingleValueEvent(new ValueEventListener() {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+          if (snapshot.exists()) {
+            for (DataSnapshot coffeeSnapshot : snapshot.getChildren()) {
+              CoffeeModel coffeeModel = coffeeSnapshot.getValue(CoffeeModel.class);
+              coffeeModel.setKey(coffeeSnapshot.getKey());
+              coffeeModels.add(coffeeModel);
             }
-        });
+            coffeeLoadListener.onCoffeeLoadSuccess(coffeeModels);
+          } else
+            coffeeLoadListener.onCoffeeLoadFailed("Firebase load error");
+        }
 
-        return view;
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+          coffeeLoadListener.onCoffeeLoadFailed(error.getMessage());
+        }
+      });
+  }
 
-    }
+  private void init() {
 
+    cartLoadListener = HomeFragment.this;
+    coffeeLoadListener = HomeFragment.this;
+    favLoadListener = HomeFragment.this;
+  }
 
+  @Override
+  public void onStart() {
+    super.onStart();
+    EventBus.getDefault().register(this);
+  }
 
-    public static ProgressDialog mProgressDialog;
+  @Override
+  public void onStop() {
+    if (EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
+      EventBus.getDefault().removeStickyEvent(updatecartEvent.class);
+    EventBus.getDefault().unregister(this);
+    super.onStop();
+  }
 
-    private void loadCoffeeFromFirebase() {
+  @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+  public void onUpdateCart(updatecartEvent event) {
+    countCartItem();
+  }
 
-        List<CoffeeModel> coffeeModels = new ArrayList<>();
-        FirebaseDatabase.getInstance()
-                .getReference("coffees")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+  @Override
+  public void onCartLoadSuccess(List<CartModel> cartModelList) {
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+    int cartSum = 0;
+    for (CartModel cartModel : cartModelList)
+      cartSum += cartModel.getQuantity();
 
-                        if(snapshot.exists())
-                        {
-                            for(DataSnapshot coffeeSnapshot:snapshot.getChildren())
-                            {
-                                CoffeeModel coffeeModel = coffeeSnapshot.getValue(CoffeeModel.class);
-                                coffeeModel.setKey(coffeeSnapshot.getKey());
-                                coffeeModels.add(coffeeModel);
-                            }
-                            coffeeLoadListener.onCoffeeLoadSuccess(coffeeModels);
-                        }
-                        else
-                            coffeeLoadListener.onCoffeeLoadFailed("Firebase load error");
+    badge = (NotificationBadge) requireActivity().findViewById(R.id.notifBadge);
+    badge.setNumber(cartSum);
+  }
 
-                    }
+  @Override
+  public void onCartLoadFailed(String message) {
+    Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+  }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        coffeeLoadListener.onCoffeeLoadFailed(error.getMessage());
-                    }
-                });
-    }
+  @Override
+  public void onCoffeeLoadSuccess(List<CoffeeModel> coffeeModelList) {
+    coffeeAdapter adapter = new coffeeAdapter(this.getContext(), coffeeModelList, cartLoadListener, favLoadListener);
+    rvHome.setAdapter(adapter);
+  }
 
+  @Override
+  public void onCoffeeLoadFailed(String message) {
+    Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+  }
 
-    private void init() {
+  @Override
+  public void onResume() {
+    super.onResume();
+    countCartItem();
+  }
 
+  private void countCartItem() {
+    List<CartModel> cartModels = new ArrayList<>();
+    FirebaseDatabase
+      .getInstance().getReference("cart")
+      .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+      .addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+          for (DataSnapshot cartSnapshot : snapshot.getChildren()) {
+            CartModel cartmodel = cartSnapshot.getValue(CartModel.class);
+            cartmodel.setKey(cartSnapshot.getKey());
+            cartModels.add(cartmodel);
+          }
+          cartLoadListener.onCartLoadSuccess(cartModels);
+        }
 
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
 
+        }
+      });
+  }
 
+  @Override
+  public void onFavLoadSuccess(List<FavModel> favModelList) {
 
-        cartLoadListener = HomeFragment.this;
-        coffeeLoadListener = HomeFragment.this;
-        favLoadListener  = HomeFragment.this;
+  }
 
-
-
-    }
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-
-    @Override
-    public void onStop() {
-        if(EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
-            EventBus.getDefault().removeStickyEvent(updatecartEvent.class);
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onUpdateCart(updatecartEvent event)
-    {
-        countCartItem();
-    }
-
-    @Override
-    public void onCartLoadSuccess(List<CartModel> cartModelList) {
-
-        int cartSum = 0;
-        for(CartModel cartModel: cartModelList)
-            cartSum += cartModel.getQuantity();
-
-        badge = (NotificationBadge) requireActivity().findViewById(R.id.notifBadge);
-        badge.setNumber(cartSum);
-
-    }
-
-    @Override
-    public void onCartLoadFailed(String message) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onCoffeeLoadSuccess(List<CoffeeModel> coffeeModelList) {
-        coffeeAdapter adapter = new coffeeAdapter(this.getContext(), coffeeModelList, cartLoadListener, favLoadListener);
-        rvHome.setAdapter(adapter);
-    }
-
-    @Override
-    public void onCoffeeLoadFailed(String message) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        countCartItem();
-    }
-
-
-    private void countCartItem() {
-        List<CartModel> cartModels = new ArrayList<>();
-        FirebaseDatabase
-                .getInstance().getReference("cart")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot cartSnapshot: snapshot.getChildren())
-                        {
-                            CartModel cartmodel = cartSnapshot.getValue(CartModel.class);
-                            cartmodel.setKey(cartSnapshot.getKey());
-                            cartModels.add(cartmodel);
-                        }
-                        cartLoadListener.onCartLoadSuccess(cartModels);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-    }
-
-    @Override
-    public void onFavLoadSuccess(List<FavModel> favModelList) {
-
-    }
-
-    @Override
-    public void onFavLoadFailed(String message) {
-        Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
-    }
+  @Override
+  public void onFavLoadFailed(String message) {
+    Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+  }
 }
