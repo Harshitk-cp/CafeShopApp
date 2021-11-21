@@ -67,13 +67,13 @@ public class ProfileFragment extends Fragment {
               txtProfileZip.setText(new StringBuilder().append(userModel.getZip()));
             }
           } else {
-            //Toast.makeText(DashboardActivity.this, "hah error", Toast.LENGTH_SHORT).show();
+            System.out.println("snapshot error");
           }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-          System.out.println("hah error");
+          System.out.println("database error");
         }
       });
 
