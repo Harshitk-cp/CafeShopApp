@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,9 +60,11 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
         .setNegativeButton("cancel", (dialog1, which) -> dialog1.dismiss())
         .setPositiveButton("Ok", (dialog12, which) -> {
 
-          notifyItemRemoved(position);
+
 
           deleteFavFromFirebase(favModelList.get(position));
+          notifyItemRemoved(position);
+          notifyDataSetChanged();
           dialog12.dismiss();
         }).create();
       dialog.show();
@@ -90,7 +93,7 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
     @BindView(R.id.txtPriceFav)
     TextView txtPriceFav;
     @BindView(R.id.txtRemoveFav)
-    TextView txtRemoveFav;
+    ImageView txtRemoveFav;
 
     Unbinder unbinder;
 

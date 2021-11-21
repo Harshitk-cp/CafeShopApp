@@ -3,6 +3,7 @@ package com.harshit.cafeshopapp.activity.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.activity.CartActivity;
+import com.harshit.cafeshopapp.activity.activity.DashboardActivity;
+import com.harshit.cafeshopapp.activity.activity.PreviewActivity;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
 import com.harshit.cafeshopapp.activity.model.CartModel;
 import com.harshit.cafeshopapp.activity.model.CoffeeModel;
@@ -66,9 +69,13 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
         .setNegativeButton("cancel", (dialog1, which) -> dialog1.dismiss())
         .setPositiveButton("Ok", (dialog12, which) -> {
 
-          notifyItemRemoved(position);
+
+
+
 
           deleteFromFirebase(cartModelList.get(position));
+          notifyItemRemoved(position);
+          notifyDataSetChanged();
           dialog12.dismiss();
         }).create();
       dialog.show();
@@ -77,12 +84,18 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
 
   private void deleteFromFirebase(CartModel cartModel) {
 
-    FirebaseDatabase.getInstance()
-      .getReference("cart")
-      .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-      .child(cartModel.getKey())
-      .removeValue()
-      .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
+    if(cartModel.getTotalQuantity() == 1){
+      Intent intent = new Intent(this.context, DashboardActivity.class);
+      context.startActivity(intent);
+    }
+    else {
+      FirebaseDatabase.getInstance()
+        .getReference("cart")
+        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        .child(cartModel.getKey())
+        .removeValue()
+        .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
+    }
   }
 
   private void plusCartItem(MyCartViewHolder holder, CartModel cartModel) {

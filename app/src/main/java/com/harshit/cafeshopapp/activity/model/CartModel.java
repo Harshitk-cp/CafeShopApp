@@ -6,6 +6,7 @@ public class CartModel {
   private String _price;
   private int _quantity;
 
+
   public CartModel() {
   }
 

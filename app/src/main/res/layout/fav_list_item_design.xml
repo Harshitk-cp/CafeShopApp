@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="130dp"
     android:layout_margin="4dp"
-    android:background="#ffffff"
     app:cardCornerRadius="6dp">
 
     <LinearLayout
         android:id="@+id/llContentfav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:weightSum="6">
 
         <ImageView
@@ -68,13 +67,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.1">
 
-            <TextView
+            <ImageView
                 android:id="@+id/txtRemoveFav"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
-                android:background="@drawable/ic_baseline_cancel_24"
+                android:src="@drawable/ic_baseline_cancel_24"
+                app:tint="@color/primary"
                 android:tag="unliked" />
 
             <TextView
