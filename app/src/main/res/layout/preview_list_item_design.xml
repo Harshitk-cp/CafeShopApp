@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/grey"
         android:orientation="horizontal"
+        android:backgroundTint="@color/white"
         android:weightSum="6">
 
         <ImageView

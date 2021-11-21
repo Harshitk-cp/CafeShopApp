@@ -41,7 +41,6 @@ public class FavFragment extends Fragment implements IFavLoadListener {
 
   RecyclerView rvFav;
   IFavLoadListener favLoadListener;
-  TextView txtFavourite;
   ImageView imgEmptyFavIcon;
   TextView txtEmptyFavText;
 
