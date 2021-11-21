@@ -7,8 +7,10 @@ public class CartModel {
   private int _quantity;
 
 
+
   public CartModel() {
   }
+
 
   public CartModel(String key, String name, String price, int qualtity) {
     this.setKey(key);

@@ -2,6 +2,7 @@ package com.harshit.cafeshopapp.activity.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
+import com.harshit.cafeshopapp.activity.activity.CartActivity;
+import com.harshit.cafeshopapp.activity.activity.DashboardActivity;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
 import com.harshit.cafeshopapp.activity.fragments.FavFragment;
 import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
@@ -59,6 +62,17 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
         .setMessage("Do you want to remove this item from favs?")
         .setNegativeButton("cancel", (dialog1, which) -> dialog1.dismiss())
         .setPositiveButton("Ok", (dialog12, which) -> {
+
+
+          if(getItemCount() == 1){
+            deleteFavFromFirebase(favModelList.get(position));
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+            Intent intent = new Intent(this.context, DashboardActivity.class);
+            context.startActivity(intent);
+            
+
+          }
 
 
 

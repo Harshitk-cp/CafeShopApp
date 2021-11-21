@@ -146,8 +146,10 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
   @Override
   public void onCartLoadSuccess(List<CartModel> cartModelList) {
     double sum = 0;
+
     for (CartModel cartModel : cartModelList) {
       sum += cartModel.getTotalPrice();
+
     }
 
     txtTextTotalPrice.setText(new StringBuilder("Total Price-> Rs. ").append(sum));

@@ -70,6 +70,16 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
         .setPositiveButton("Ok", (dialog12, which) -> {
 
 
+          if(getItemCount() == 1){
+            deleteFromFirebase(cartModelList.get(position));
+            notifyItemRemoved(position);
+            notifyDataSetChanged();
+            Intent intent = new Intent(this.context, DashboardActivity.class);
+            ((DashboardActivity)context).finish();
+            context.startActivity(intent);
+            ((CartActivity)context).finish();
+
+          }
 
 
 
@@ -82,25 +92,22 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
     });
   }
 
+
   private void deleteFromFirebase(CartModel cartModel) {
 
-    if(cartModel.getTotalQuantity() == 1){
-      Intent intent = new Intent(this.context, DashboardActivity.class);
-      context.startActivity(intent);
-    }
-    else {
+
       FirebaseDatabase.getInstance()
         .getReference("cart")
         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
         .child(cartModel.getKey())
         .removeValue()
         .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
-    }
+
   }
 
   private void plusCartItem(MyCartViewHolder holder, CartModel cartModel) {
 
-    float totalPrice = Float.parseFloat(cartModel.getPrices());
+
     cartModel.setQuantity(cartModel.getQuantity() + 1);
     holder.txtQuantityCart.setText(new StringBuilder().append(cartModel.getQuantity()));
     updateFirebase(cartModel);

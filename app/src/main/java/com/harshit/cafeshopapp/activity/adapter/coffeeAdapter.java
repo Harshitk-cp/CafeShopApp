@@ -168,6 +168,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
 
             CartModel cartModel = snapshot.getValue(CartModel.class);
             cartModel.setQuantity(cartModel.getQuantity() + 1);
+
             Map<String, Object> updateData = new HashMap<>();
             updateData.put("quantity", cartModel.getQuantity());
             updateData.put("totalPrice", cartModel.getQuantity() * Float.parseFloat(coffeeModel.getPrices()));
