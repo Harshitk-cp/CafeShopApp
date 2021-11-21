@@ -66,8 +66,6 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
         }).create();
       dialog.show();
     });
-
-    FavFragment.mProgressDialog.dismiss();
   }
 
   private void deleteFavFromFirebase(FavModel favModel) {

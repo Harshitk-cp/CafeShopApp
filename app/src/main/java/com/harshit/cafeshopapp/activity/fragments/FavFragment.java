@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,33 +38,34 @@ import java.util.List;
 import butterknife.BindView;
 
 public class FavFragment extends Fragment implements IFavLoadListener {
+
   RecyclerView rvFav;
   IFavLoadListener favLoadListener;
   TextView txtFavourite;
+  ImageView imgEmptyFavIcon;
+  TextView txtEmptyFavText;
 
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_fav, container, false);
 
+    imgEmptyFavIcon = view.findViewById(R.id.imgEmptyFavIcon);
+    txtEmptyFavText = view.findViewById(R.id.txtEmptyFavText);
     rvFav = view.findViewById(R.id.rvFav);
     rvFav.setLayoutManager(new LinearLayoutManager(getContext()));
 
     init();
     loadFavsFromFirebase();
 
-    mProgressDialog = new ProgressDialog(this.getContext());
-    mProgressDialog.setCancelable(false);
-    mProgressDialog.show();
-    mProgressDialog.setContentView(R.layout.coffee_progress_layout);
-    mProgressDialog.getWindow().setBackgroundDrawableResource(
-      android.R.color.transparent
-    );
+
+
 
     return view;
+
   }
 
-  public static ProgressDialog mProgressDialog;
+
 
   private void loadFavsFromFirebase() {
 
@@ -76,15 +78,18 @@ public class FavFragment extends Fragment implements IFavLoadListener {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-          if (snapshot.exists()) {
-            for (DataSnapshot favSnapshot : snapshot.getChildren()) {
+          if(snapshot.exists())
+          {
+            for(DataSnapshot favSnapshot:snapshot.getChildren())
+            {
               FavModel favModel = favSnapshot.getValue(FavModel.class);
               favModel.setKey(favSnapshot.getKey());
               favModels.add(favModel);
             }
             favLoadListener.onFavLoadSuccess(favModels);
-          } else
-            favLoadListener.onFavLoadFailed("Firebase load error");
+          } else {
+            System.out.println("Looks like fav is empty");
+          }
         }
 
         @Override
@@ -96,7 +101,9 @@ public class FavFragment extends Fragment implements IFavLoadListener {
 
   private void init() {
 
+
     favLoadListener = FavFragment.this;
+
   }
 
   @Override
@@ -105,23 +112,41 @@ public class FavFragment extends Fragment implements IFavLoadListener {
     EventBus.getDefault().register(this);
   }
 
+
   @Override
   public void onStop() {
-    if (EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
+    if(EventBus.getDefault().hasSubscriberForEvent(updatecartEvent.class))
       EventBus.getDefault().removeStickyEvent(updatecartEvent.class);
     EventBus.getDefault().unregister(this);
     super.onStop();
   }
 
   @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-  public void onUpdateCart(updatecartEvent event) {
+  public void onUpdateCart(updatecartEvent event)
+  {
     loadFavsFromFirebase();
   }
+
 
   @Override
   public void onFavLoadSuccess(List<FavModel> favModelList) {
     favAdapter adapter = new favAdapter(this.getContext(), favModelList, favLoadListener);
+
+    if(adapter == null)
+    {
+      txtEmptyFavText.setVisibility(View.VISIBLE);
+      imgEmptyFavIcon.setVisibility(View.VISIBLE);
+
+    }
+    else
+    {
+
+      txtEmptyFavText.setVisibility(View.GONE);
+      imgEmptyFavIcon.setVisibility(View.GONE);
+    }
+
     rvFav.setAdapter(adapter);
+
   }
 
   @Override

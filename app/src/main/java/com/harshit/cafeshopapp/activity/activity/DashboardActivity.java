@@ -111,7 +111,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
       case R.id.nav_favs:
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
           new FavFragment()).commit();
-        getSupportActionBar().setTitle("FAQs");
+        getSupportActionBar().setTitle("Favourites");
         break;
       case R.id.nav_logout:
         new AlertDialog.Builder(DashboardActivity.this)
