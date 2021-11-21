@@ -185,7 +185,6 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
             cartModel.setName(coffeeModel.getName());
             cartModel.setPrices(coffeeModel.getPrices());
             cartModel.setQuantity(1);
-            cartModel.setTotalPrice(Float.parseFloat(coffeeModel.getPrices()));
 
             userCart.child(coffeeModel.getKey())
               .setValue(cartModel)

@@ -1,51 +1,67 @@
 package com.harshit.cafeshopapp.activity.model;
 
 public class CartModel {
-  private String key, name, prices;
-  private int quantity;
-  private float totalPrice;
+  private String _key;
+  private String _name;
+  private String _price;
+  private int _quantity;
 
   public CartModel() {
+  }
 
+  public CartModel(String key, String name, String price, int qualtity) {
+    this.setKey(key);
+    this.setName(name);
+    this.setPrices(price);
+    this.setQuantity(qualtity);
   }
 
   public String getKey() {
-    return key;
+    return this._key;
   }
 
   public void setKey(String key) {
-    this.key = key;
+    if (key.isEmpty()) {
+      throw new IllegalArgumentException("Provided key is an empty string.");
+    }
+    this._key = key;
   }
 
   public String getName() {
-    return name;
+    return this._name;
   }
 
   public void setName(String name) {
-    this.name = name;
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Provided name is an empty string.");
+    }
+    this._name = name;
   }
 
   public String getPrices() {
-    return prices;
+    return this._price;
   }
 
-  public void setPrices(String prices) {
-    this.prices = prices;
+  public void setPrices(String price) {
+    double n = Integer.parseInt(price);
+    if (n < 0) {
+      throw new ArithmeticException("Price cannot be negative.");
+    }
+    this._price = price;
   }
 
   public int getQuantity() {
-    return quantity;
+    return this._quantity;
   }
 
   public void setQuantity(int quantity) {
-    this.quantity = quantity;
+    if (quantity < 0) {
+      throw new ArithmeticException("Quantity cannot be negative.");
+    }
+    this._quantity = quantity;
   }
 
   public float getTotalPrice() {
-    return totalPrice;
-  }
-
-  public void setTotalPrice(float totalPrice) {
-    this.totalPrice = totalPrice;
+    return Float.parseFloat(this._price) * this._quantity;
   }
 }

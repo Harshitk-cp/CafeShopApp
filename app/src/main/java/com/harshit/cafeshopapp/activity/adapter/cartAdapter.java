@@ -89,7 +89,6 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
 
     float totalPrice = Float.parseFloat(cartModel.getPrices());
     cartModel.setQuantity(cartModel.getQuantity() + 1);
-    cartModel.setTotalPrice(cartModel.getQuantity() * totalPrice);
     holder.txtQuantityCart.setText(new StringBuilder().append(cartModel.getQuantity()));
     updateFirebase(cartModel);
   }
@@ -99,7 +98,6 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
     if (cartModel.getQuantity() > 1) {
 
       cartModel.setQuantity(cartModel.getQuantity() - 1);
-      cartModel.setTotalPrice(cartModel.getQuantity() * Float.parseFloat(cartModel.getPrices()));
 
       holder.txtQuantityCart.setText(new StringBuilder().append(cartModel.getQuantity()));
       updateFirebase(cartModel);
