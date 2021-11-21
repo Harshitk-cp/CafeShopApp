@@ -4,45 +4,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class CartModelTest {
+class FavModelTest {
   @Test
   void constructor() {
     IllegalArgumentException e1 = assertThrows(IllegalArgumentException.class, () -> {
-      new CartModel("", "Affogato", "100", 1);
+      new FavModel("", "Caramel Macchiato", "100");
     });
     assertEquals("Provided key is an empty string.", e1.getMessage());
 
     IllegalArgumentException e2 = assertThrows(IllegalArgumentException.class, () -> {
-      new CartModel("test-key", "", "100", 1);
+      new FavModel("test-key", "", "100");
     });
     assertEquals("Provided name is an empty string.", e2.getMessage());
 
     assertThrows(NumberFormatException.class, () -> {
-      new CartModel("test-key", "Affogato", "", 1);
+      new FavModel("test-key", "Caramel Macchiato", "nan");
     });
 
     assertThrows(ArithmeticException.class, () -> {
-      new CartModel("test-key", "Affogato", "-1", 1);
-    });
-
-    assertThrows(ArithmeticException.class, () -> {
-      new CartModel("test-key", "Affogato", "100", -1);
+      new FavModel("test-key", "Caramel Macchiato", "-1");
     });
 
     assertDoesNotThrow(() -> {
-      new CartModel("test-key", "Affogato", "100", 1);
+      new FavModel("test-key", "Caramel Macchiato", "100");
     });
   }
 
   @Test
   void getKey() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
     assertEquals("test-key", model.getKey());
   }
 
   @Test
   void setKey() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
 
     model.setKey("test-key-2");
     assertEquals("test-key-2", model.getKey());
@@ -55,13 +51,13 @@ class CartModelTest {
 
   @Test
   void getName() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
-    assertEquals("Affogato", model.getName());
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
+    assertEquals("Caramel Macchiato", model.getName());
   }
 
   @Test
   void setName() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
 
     model.setName("test-name");
     assertEquals("test-name", model.getName());
@@ -74,13 +70,13 @@ class CartModelTest {
 
   @Test
   void getPrices() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
     assertEquals("100", model.getPrices());
   }
 
   @Test
   void setPrices() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
+    FavModel model = new FavModel("test-key", "Caramel Macchiato", "100");
 
     model.setPrices("101");
     assertEquals("101", model.getPrices());
@@ -96,29 +92,5 @@ class CartModelTest {
     assertThrows(ArithmeticException.class, () -> {
       model.setPrices("-1");
     });
-  }
-
-  @Test
-  void getQuantity() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
-    assertEquals(1, model.getQuantity());
-  }
-
-  @Test
-  void setQuantity() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 1);
-
-    model.setQuantity(2);
-    assertEquals(2, model.getQuantity());
-
-    assertThrows(ArithmeticException.class, () -> {
-      model.setQuantity(-1);
-    });
-  }
-
-  @Test
-  void getTotalPrice() {
-    CartModel model = new CartModel("test-key", "Affogato", "100", 2);
-    assertEquals(200.0, model.getTotalPrice());
   }
 }

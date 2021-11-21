@@ -1,33 +1,50 @@
 package com.harshit.cafeshopapp.activity.model;
 
 public class FavModel {
-  private String key, name, prices;
+  private String _key;
+  private String _name;
+  private String _price;
 
   public FavModel() {
+  }
 
+  public FavModel(String key, String name, String price) {
+    this.setKey(key);
+    this.setName(name);
+    this.setPrices(price);
   }
 
   public String getKey() {
-    return key;
+    return this._key;
   }
 
   public void setKey(String key) {
-    this.key = key;
+    if (key.isEmpty()) {
+      throw new IllegalArgumentException("Provided key is an empty string.");
+    }
+    this._key = key;
   }
 
   public String getName() {
-    return name;
+    return this._name;
   }
 
   public void setName(String name) {
-    this.name = name;
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Provided name is an empty string.");
+    }
+    this._name = name;
   }
 
   public String getPrices() {
-    return prices;
+    return this._price;
   }
 
-  public void setPrices(String prices) {
-    this.prices = prices;
+  public void setPrices(String price) {
+    double n = Integer.parseInt(price);
+    if (n < 0) {
+      throw new ArithmeticException("Price cannot be negative.");
+    }
+    this._price = price;
   }
 }

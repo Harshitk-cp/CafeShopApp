@@ -1,67 +1,88 @@
 package com.harshit.cafeshopapp.activity.model;
 
 public class UserModel {
-  private String key, address, city, name, state, zip;
-
-  public UserModel(String key, String address, String city, String name, String state, String zip) {
-
-    this.key = key;
-    this.name = name;
-    this.address = address;
-    this.city = city;
-    this.state = state;
-    this.zip = zip;
-  }
+  private String _key;
+  private String _address;
+  private String _city;
+  private String _name;
+  private String _state;
+  private String _zip;
 
   public UserModel() {
+  }
 
+  public UserModel(String key, String name, String address, String city, String state, String zip) {
+    this.setKey(key);
+    this.setName(name);
+    this.setAddress(address);
+    this.setCity(city);
+    this.setState(state);
+    this.setZip(zip);
   }
 
   public String getKey() {
-    return key;
+    return this._key;
   }
 
   public void setKey(String key) {
-    this.key = key;
+    if (key.isEmpty()) {
+      throw new IllegalArgumentException("Provided key is an empty string.");
+    }
+    this._key = key;
   }
 
   public String getName() {
-    return name;
+    return this._name;
   }
 
   public void setName(String name) {
-    this.name = name;
+    if (name.isEmpty()) {
+      throw new IllegalArgumentException("Provided name is an empty string.");
+    }
+    this._name = name;
   }
 
   public String getAddress() {
-    return address;
+    return this._address;
   }
 
   public void setAddress(String address) {
-    this.address = address;
+    if (address.isEmpty()) {
+      throw new IllegalArgumentException("Provided address is an empty string.");
+    }
+    this._address = address;
   }
 
   public String getCity() {
-    return city;
+    return this._city;
   }
 
   public void setCity(String city) {
-    this.city = city;
+    if (city.isEmpty()) {
+      throw new IllegalArgumentException("Provided city is an empty string.");
+    }
+    this._city = city;
   }
 
   public String getState() {
-    return state;
-  }
-
-  public String getZip() {
-    return zip;
-  }
-
-  public void setZip(String zip) {
-    this.zip = zip;
+    return this._state;
   }
 
   public void setState(String state) {
-    this.state = state;
+    if (state.isEmpty()) {
+      throw new IllegalArgumentException("Provided state is an empty string.");
+    }
+    this._state = state;
+  }
+
+  public String getZip() {
+    return this._zip;
+  }
+
+  public void setZip(String zip) {
+    if (zip.isEmpty()) {
+      throw new IllegalArgumentException("Provided zip is an empty string.");
+    }
+    this._zip = zip;
   }
 }

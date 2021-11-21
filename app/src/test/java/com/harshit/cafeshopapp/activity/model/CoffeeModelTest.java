@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class CoffeeModelTest {
   @Test
-  void CoffeeModel() {
+  void constructor() {
     IllegalArgumentException e1 = assertThrows(IllegalArgumentException.class, () -> {
       new CoffeeModel("", "Affogato", "Affogato Coffee", "100");
     });
