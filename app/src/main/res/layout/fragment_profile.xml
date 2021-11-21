@@ -8,51 +8,56 @@
         android:id="@+id/txtProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Name"
-        android:layout_marginTop="100dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:text="Name"
+        android:textColor="@color/primary"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtProfileAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileName"
-        android:text="address"
         android:layout_marginLeft="20dp"
+        android:text="address"
+        android:textColor="@color/primary"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProfileName" />
 
     <TextView
         android:id="@+id/txtProfileCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileAddress"
-        android:text="city"
         android:layout_marginLeft="20dp"
+        android:text="city"
+        android:textColor="@color/primary"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProfileAddress" />
 
     <TextView
         android:id="@+id/txtProfileState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileCity"
-        android:text="state"
         android:layout_marginLeft="20dp"
+        android:text="state"
+        android:textColor="@color/primary"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProfileCity" />
 
     <TextView
         android:id="@+id/txtProfileZip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txtProfileState"
-        android:text="zip"
         android:layout_marginLeft="20dp"
+        android:text="zip"
+        android:textColor="@color/primary"
         android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtProfileState" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
