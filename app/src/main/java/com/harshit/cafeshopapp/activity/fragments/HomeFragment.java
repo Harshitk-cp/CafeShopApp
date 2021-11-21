@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
@@ -88,31 +89,38 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
   public static ProgressDialog mProgressDialog;
 
   private void loadCoffeeFromFirebase() {
+    List<CoffeeModel> coffees = new ArrayList<>();
 
-    List<CoffeeModel> coffeeModels = new ArrayList<>();
-    FirebaseDatabase.getInstance()
-      .getReference("coffees")
-      .addListenerForSingleValueEvent(new ValueEventListener() {
+    FirebaseDatabase instance = FirebaseDatabase.getInstance();
+    DatabaseReference menu = instance.getReference("menu");
 
-        @Override
-        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-          if (snapshot.exists()) {
-            for (DataSnapshot coffeeSnapshot : snapshot.getChildren()) {
-              CoffeeModel coffeeModel = coffeeSnapshot.getValue(CoffeeModel.class);
-              coffeeModel.setKey(coffeeSnapshot.getKey());
-              coffeeModels.add(coffeeModel);
-            }
-            coffeeLoadListener.onCoffeeLoadSuccess(coffeeModels);
-          } else
-            coffeeLoadListener.onCoffeeLoadFailed("Firebase load error");
+    ValueEventListener listener = new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot collection) {
+        if (collection.exists()) {
+          for (DataSnapshot coffeeItem : collection.getChildren()) {
+            String key = coffeeItem.getKey();
+            String name = coffeeItem.child("name").getValue(String.class);
+            String description = coffeeItem.child("description").getValue(String.class);
+            Integer price = coffeeItem.child("price").getValue(Integer.class);
+            CoffeeModel coffee = new CoffeeModel(key, name, description, String.valueOf(price));
+            coffees.add(coffee);
+          }
+          coffeeLoadListener.onCoffeeLoadSuccess(coffees);
+        } else {
+          // TODO: Just directly show error toast
+          coffeeLoadListener.onCoffeeLoadFailed("Error: Firebase menu list not found.");
         }
+      }
 
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-          coffeeLoadListener.onCoffeeLoadFailed(error.getMessage());
-        }
-      });
+      @Override
+      public void onCancelled(DatabaseError error) {
+        // TODO: Just directly show error toast
+        coffeeLoadListener.onCoffeeLoadFailed(error.getMessage());
+      }
+    };
+
+    menu.addListenerForSingleValueEvent(listener);
   }
 
   private void init() {
