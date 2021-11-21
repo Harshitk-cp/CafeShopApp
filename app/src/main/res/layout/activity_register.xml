@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".activity.activity.RegisterActivity">
 
     <TextView
@@ -11,11 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/new_font"
+        android:fontFamily="@font/lobster_font"
         android:textStyle="bold"
         android:padding="16dp"
+        android:textColor="@color/white"
         android:text="Register"
-        android:textSize="30sp"
+        android:textSize="48sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,10 +26,12 @@
         android:id="@+id/etRegisterEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginLeft="10dp"
         android:fontFamily="@font/new_font"
         android:layout_marginRight="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
         android:hint="E mail..."
         android:inputType="textEmailAddress"
         android:maxLines="1"
@@ -40,14 +44,92 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:fontFamily="@font/new_font"
         android:hint="Your name..."
         android:maxLines="1"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
+
+    <EditText
+        android:id="@+id/etAddressInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="16dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
+        android:layout_marginRight="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/new_font"
+        android:hint="Enter delivery address"
+        android:maxLines="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etRegisterName" />
+
+    <EditText
+        android:id="@+id/etCityInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
+        android:paddingBottom="16dp"
+        android:fontFamily="@font/new_font"
+        android:hint="Enter your city"
+        android:maxLines="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etAddressInfo" />
+
+    <EditText
+        android:id="@+id/etStateInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
+        android:paddingBottom="16dp"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/new_font"
+        android:hint="Enter your state"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCityInfo" />
+
+    <EditText
+        android:id="@+id/etZipInfo"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/new_font"
+        android:hint="Enter your zip"
+        android:maxLines="1"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etStateInfo" />
 
     <EditText
         android:id="@+id/etRegisterPassword"
@@ -56,13 +138,16 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:textColorHighlight="@color/primaryDark"
+        android:textColorLink="@color/primaryDark"
+        android:textCursorDrawable="@drawable/text_cursor"
         android:fontFamily="@font/new_font"
         android:hint="Password..."
         android:inputType="textPassword"
         android:maxLines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterName" />
+        app:layout_constraintTop_toBottomOf="@+id/etZipInfo" />
 
     <Button
         android:id="@+id/btnRegister"
@@ -71,6 +156,7 @@
         android:layout_marginRight="10dp"
         android:padding="4dp"
         android:text="REGISTER"
+        android:backgroundTint="@color/primaryDark"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword" />
 

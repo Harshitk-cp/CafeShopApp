@@ -55,7 +55,7 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
     setContentView(R.layout.activity_place_order);
 
     rvPreview = findViewById(R.id.rvPreview);
-    etNameInfo = findViewById(R.id.etnameInfo);
+    etNameInfo = findViewById(R.id.etRegisterName);
     etAddressInfo = findViewById(R.id.etAddressInfo);
     etCityInfo = findViewById(R.id.etCityInfo);
     etStateInfo = findViewById(R.id.etStateInfo);
@@ -80,42 +80,18 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
       @Override
       public void onClick(View view) {
 
-        if (etNameInfo.getText().toString().isEmpty()) {
-          etNameInfo.setError("Your name is required");
-        } else if (etAddressInfo.getText().toString().isEmpty()) {
-          etAddressInfo.setError("Address cannot be empty");
-        } else if (etCityInfo.getText().toString().isEmpty()) {
-          etCityInfo.setError("required field");
-        } else if (etStateInfo.getText().toString().isEmpty()) {
-          etStateInfo.setError("required field");
-        } else if (etZipInfo.getText().toString().isEmpty()) {
-          etZipInfo.setError("required field");
-        } else {
-          insertUserData();
+
+
           Toast.makeText(PreviewActivity.this, "your order was placed succesfully!!", Toast.LENGTH_SHORT).show();
           Intent intent = new Intent(PreviewActivity.this, DashboardActivity.class);
           startActivity(intent);
           finish();
-        }
+
       }
     });
   }
 
-  private void insertUserData() {
 
-    String userAddress = etAddressInfo.getText().toString();
-    String userCity = etCityInfo.getText().toString();
-    String userState = etStateInfo.getText().toString();
-    String userZip = etZipInfo.getText().toString();
-
-    UserModel userModels = new UserModel();
-    userModels.setAddress(userAddress);
-    userModels.setCity(userCity);
-    userModels.setState(userState);
-    userModels.setZip(userZip);
-
-    userDatabase.push().setValue(userModels);
-  }
 
   private void loadPreviewFromFirebase() {
     List<CartModel> cartModels = new ArrayList<>();

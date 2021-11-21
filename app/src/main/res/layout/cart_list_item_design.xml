@@ -4,14 +4,16 @@
     android:id="@+id/itemCoffee"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:layout_margin="4dp"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="6dp">
 
     <LinearLayout
         android:id="@+id/llContentCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:weightSum="6">
 
@@ -41,7 +43,7 @@
                 android:maxLines="2"
                 android:padding="5dp"
                 android:text="coffee"
-                android:textColor="@color/white"
+                android:textColor="@color/primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -57,7 +59,7 @@
                 android:fontFamily="@font/new_font"
                 android:padding="6dp"
                 android:text="300/-"
-                android:textColor="@color/primaryLight"
+                android:textColor="@color/primary"
                 android:textSize="14sp" />
 
         </RelativeLayout>

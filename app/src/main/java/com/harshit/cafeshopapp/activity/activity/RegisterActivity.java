@@ -22,6 +22,11 @@ public class RegisterActivity extends AppCompatActivity {
   EditText etRegisterEmail;
   EditText etRegisterPassword;
   EditText etRegisterName;
+  EditText etNameInfo;
+  EditText etAddressInfo;
+  EditText etCityInfo;
+  EditText etStateInfo;
+  EditText etZipInfo;
 
   FirebaseAuth mAuth;
   DatabaseReference userDatabase;
@@ -31,6 +36,11 @@ public class RegisterActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_register);
 
+    etNameInfo = findViewById(R.id.etRegisterName);
+    etAddressInfo = findViewById(R.id.etAddressInfo);
+    etCityInfo = findViewById(R.id.etCityInfo);
+    etStateInfo = findViewById(R.id.etStateInfo);
+    etZipInfo = findViewById(R.id.etZipInfo);
     btnRegister = findViewById(R.id.btnRegister);
     etRegisterEmail = findViewById(R.id.etRegisterEmail);
     etRegisterPassword = findViewById(R.id.etRegisterPassword);
@@ -40,8 +50,16 @@ public class RegisterActivity extends AppCompatActivity {
 
     btnRegister.setOnClickListener(view -> {
       createUser();
-      if (etRegisterName.getText().toString().isEmpty()) {
-        etRegisterName.setError("Your name is required");
+      if (etNameInfo.getText().toString().isEmpty()) {
+        etNameInfo.setError("Your name is required");
+      } else if (etAddressInfo.getText().toString().isEmpty()) {
+        etAddressInfo.setError("Address cannot be empty");
+      } else if (etCityInfo.getText().toString().isEmpty()) {
+        etCityInfo.setError("required field");
+      } else if (etStateInfo.getText().toString().isEmpty()) {
+        etStateInfo.setError("required field");
+      } else if (etZipInfo.getText().toString().isEmpty()) {
+        etZipInfo.setError("required field");
       } else {
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -61,9 +79,17 @@ public class RegisterActivity extends AppCompatActivity {
       .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("1");
 
     String userName = etRegisterName.getText().toString();
+    String userAddress = etAddressInfo.getText().toString();
+    String userCity = etCityInfo.getText().toString();
+    String userState = etStateInfo.getText().toString();
+    String userZip = etZipInfo.getText().toString();
 
     UserModel userModels = new UserModel();
     userModels.setName(userName);
+    userModels.setAddress(userAddress);
+    userModels.setCity(userCity);
+    userModels.setState(userState);
+    userModels.setZip(userZip);
 
     userDatabase.push().setValue(userModels);
   }
