@@ -68,9 +68,7 @@ public class CoffeeModel {
   }
 
   public void setImgUrl(String imgUrl) {
-    if (imgUrl.isEmpty()) {
-      throw new IllegalArgumentException("Provided img url is an empty string.");
-    }
+
     this._imgUrl = imgUrl;
   }
 }

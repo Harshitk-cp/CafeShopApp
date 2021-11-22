@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +51,6 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
   private List<CoffeeModel> coffeeModelList;
   private ICartLoadListener iCartLoadListener;
   private IFavLoadListener iFavLoadListener;
-  private TextView txtFavourite;
 
   public coffeeAdapter(Context context, List<CoffeeModel> coffeeModelList, ICartLoadListener iCartLoadListener, IFavLoadListener iFavLoadListener) {
     this.context = context;
@@ -69,6 +70,8 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
 
     holder.txtCoffeeName.setText(new StringBuilder().append(coffeeModelList.get(position).getName()));
     holder.txtPrice.setText(new StringBuilder("Rs.").append(coffeeModelList.get(position).getPrices()));
+    Glide.with(holder.imgCoffeeImage.getContext()).load(coffeeModelList.get(position).getImgUrl()).override(600, 700).centerCrop().into(holder.imgCoffeeImage);
+
 
     holder.setListener(((view, adapterPosition) ->
     {
@@ -218,6 +221,8 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
     View itemCoffee;
     @BindView(R.id.txtFavorite)
     TextView txtFavorite;
+    @BindView(R.id.imgCoffeeImage)
+    ImageView imgCoffeeImage;
 
     IRecyclerViewClickListener listener;
 
