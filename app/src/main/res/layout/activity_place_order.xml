@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/accent"
     tools:context=".activity.activity.PreviewActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,17 +19,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/new_font"
-        android:text="Customer Details"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actionBarInfo" />
+
 
 
     <TextView
@@ -37,9 +27,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total items in cart"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@color/primaryLight"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
+        app:layout_constraintTop_toBottomOf="@id/actionBarInfo" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -59,20 +53,46 @@
         android:id="@+id/txtSubTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18dp"
         android:layout_marginRight="20dp"
+        android:textColor="@color/primaryLight"
         android:text="SubTotal -> Rs.120.00"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvPreview" />
+
+    <TextView
+        android:id="@+id/txtTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textSize="18dp"
+        android:textColor="@color/primaryLight"
+        android:layout_marginRight="20dp"
+        android:text="Tax -> 85"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtSubTotal" />
+
+    <View
+        android:id="@+id/viewLine"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/primary"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/txtTax"
+        app:layout_constraintBottom_toTopOf="@+id/txtTotal"/>
 
     <TextView
         android:id="@+id/txtTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:textSize="18dp"
+        android:textColor="@color/primaryLight"
         android:layout_marginRight="20dp"
         android:text="Total -> Rs.200.00"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtSubTotal" />
+        app:layout_constraintTop_toBottomOf="@id/txtTax" />
 
     <Button
         android:id="@+id/btnPlaceOrder"
@@ -81,7 +101,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="15dp"
-        android:text="Place youre order"
+        android:text="Place your order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

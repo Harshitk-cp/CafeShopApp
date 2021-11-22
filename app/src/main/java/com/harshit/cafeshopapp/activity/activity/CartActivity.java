@@ -71,6 +71,8 @@ public class CartActivity extends AppCompatActivity implements ICartLoadListener
       @Override
       public void onClick(View view) {
         Intent myintent = new Intent(CartActivity.this, PreviewActivity.class);
+        String textTotalPrice = (String) txtTextTotalPrice.getText();
+        myintent.putExtra("Text Total Price", textTotalPrice);
         startActivity(myintent);
       }
     });

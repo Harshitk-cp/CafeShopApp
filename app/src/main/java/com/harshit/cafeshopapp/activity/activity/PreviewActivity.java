@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
   EditText etStateInfo;
   EditText etZipInfo;
   Button btnPlaceOrder;
+  TextView txtSubTotal;
+  TextView txtTotal;
   DatabaseReference userDatabase;
 
   @Override
@@ -61,6 +64,8 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
     etStateInfo = findViewById(R.id.etStateInfo);
     etZipInfo = findViewById(R.id.etZipInfo);
     btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
+    txtSubTotal = findViewById(R.id.txtSubTotal);
+    txtTotal = findViewById(R.id.txtTotal);
 
     Toolbar actionBarCart = findViewById(R.id.actionBarInfo);
     setSupportActionBar(actionBarCart);
@@ -70,6 +75,17 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
 
     init();
     loadPreviewFromFirebase();
+
+    Intent gettingTextTotalPrice = getIntent();
+    Bundle b = gettingTextTotalPrice.getExtras();
+
+    if(b!=null)
+    {
+      String j =(String) b.get("Text Total Price");
+      txtSubTotal.setText(j);
+    }
+
+
 
     userDatabase = FirebaseDatabase
       .getInstance().getReference("user")
