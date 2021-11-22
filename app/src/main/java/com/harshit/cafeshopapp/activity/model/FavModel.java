@@ -4,14 +4,16 @@ public class FavModel {
   private String _key;
   private String _name;
   private String _price;
+  private String _imgUrl;
 
   public FavModel() {
   }
 
-  public FavModel(String key, String name, String price) {
+  public FavModel(String key, String name, String price, String imgUrl) {
     this.setKey(key);
     this.setName(name);
     this.setPrices(price);
+    this.setImgUrl(imgUrl);
   }
 
   public String getKey() {
@@ -46,5 +48,16 @@ public class FavModel {
       throw new ArithmeticException("Price cannot be negative.");
     }
     this._price = price;
+  }
+
+  public String getImgUrl() {
+    return this._imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    if (imgUrl.isEmpty()) {
+      throw new IllegalArgumentException("Provided img url is an empty string.");
+    }
+    this._imgUrl = imgUrl;
   }
 }

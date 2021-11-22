@@ -5,6 +5,7 @@ public class CartModel {
   private String _name;
   private String _price;
   private int _quantity;
+  private String _imgUrl;
 
 
 
@@ -12,11 +13,12 @@ public class CartModel {
   }
 
 
-  public CartModel(String key, String name, String price, int qualtity) {
+  public CartModel(String key, String name, String price, int quality, String imgUrl) {
     this.setKey(key);
     this.setName(name);
     this.setPrices(price);
-    this.setQuantity(qualtity);
+    this.setQuantity(quality);
+    this.setImgUrl(imgUrl);
   }
 
   public String getKey() {
@@ -66,5 +68,16 @@ public class CartModel {
 
   public float getTotalPrice() {
     return Float.parseFloat(this._price) * this._quantity;
+  }
+
+  public String getImgUrl() {
+    return this._imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    if (imgUrl.isEmpty()) {
+      throw new IllegalArgumentException("Provided img url is an empty string.");
+    }
+    this._imgUrl = imgUrl;
   }
 }
