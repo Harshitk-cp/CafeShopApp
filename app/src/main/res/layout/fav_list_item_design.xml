@@ -4,11 +4,11 @@
     android:id="@+id/itemFav"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:layout_margin="4dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="6dp">
 
     <LinearLayout
-        android:id="@+id/llContentfav"
+        android:id="@+id/llContentFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
