@@ -68,13 +68,10 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
             deleteFavFromFirebase(favModelList.get(position));
             notifyItemRemoved(position);
             notifyDataSetChanged();
+            ((DashboardActivity)context).finish();
             Intent intent = new Intent(this.context, DashboardActivity.class);
             context.startActivity(intent);
-            
-
           }
-
-
 
           deleteFavFromFirebase(favModelList.get(position));
           notifyItemRemoved(position);

@@ -86,13 +86,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
               navUserName.setText(new StringBuilder().append(userModel.getName()));
             }
           } else {
-            Toast.makeText(DashboardActivity.this, "hah error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DashboardActivity.this, "Couldn't find user details", Toast.LENGTH_SHORT).show();
           }
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
-          System.out.println("hah error");
+          System.out.println("user details request was denied..");
         }
       });
   }

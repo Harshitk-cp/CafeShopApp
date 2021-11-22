@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,10 +77,8 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
             notifyItemRemoved(position);
             notifyDataSetChanged();
             Intent intent = new Intent(this.context, DashboardActivity.class);
-            ((DashboardActivity)context).finish();
             context.startActivity(intent);
             ((CartActivity)context).finish();
-
           }
 
 

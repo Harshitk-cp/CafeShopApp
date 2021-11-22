@@ -5,25 +5,41 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/txtInfoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:textSize="26sp"
+        android:textColor="@color/primaryDark"
+        android:text="Personal Details"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/txtProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="Name"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/txtInfoText" />
 
     <TextView
         android:id="@+id/txtProfileAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_marginLeft="20dp"
         android:text="address"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtProfileName" />
 
@@ -32,9 +48,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="city"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtProfileAddress" />
 
@@ -44,8 +62,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="state"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtProfileCity" />
 
@@ -54,9 +74,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="zip"
         android:textColor="@color/primary"
-        android:textSize="16sp"
+        android:textSize="22sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtProfileState" />
 
