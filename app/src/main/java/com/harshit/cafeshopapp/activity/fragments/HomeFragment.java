@@ -103,7 +103,8 @@ public class HomeFragment extends Fragment implements ICartLoadListener, ICoffee
             String name = coffeeItem.child("name").getValue(String.class);
             String description = coffeeItem.child("description").getValue(String.class);
             Integer price = coffeeItem.child("price").getValue(Integer.class);
-            CoffeeModel coffee = new CoffeeModel(key, name, description, String.valueOf(price));
+            String imgUrl = coffeeItem.child("imgUrl").getValue(String.class);
+            CoffeeModel coffee = new CoffeeModel(key, name, description, String.valueOf(price), imgUrl);
             coffees.add(coffee);
           }
           coffeeLoadListener.onCoffeeLoadSuccess(coffees);

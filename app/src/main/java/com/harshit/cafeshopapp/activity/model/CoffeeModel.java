@@ -5,15 +5,17 @@ public class CoffeeModel {
   private String _name;
   private String _description;
   private String _price;
+  private String _imgUrl;
 
   public CoffeeModel() {
   }
 
-  public CoffeeModel(String key, String name, String description, String price) {
+  public CoffeeModel(String key, String name, String description, String price, String imgUrl) {
     this.setKey(key);
     this.setName(name);
     this.setDescription(description);
     this.setPrices(price);
+    this.setImgUrl(imgUrl);
   }
 
   public String getKey() {
@@ -59,5 +61,16 @@ public class CoffeeModel {
       throw new ArithmeticException("Price cannot be negative.");
     }
     this._price = price;
+  }
+
+  public String getImgUrl() {
+    return this._imgUrl;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    if (imgUrl.isEmpty()) {
+      throw new IllegalArgumentException("Provided img url is an empty string.");
+    }
+    this._imgUrl = imgUrl;
   }
 }
