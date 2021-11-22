@@ -138,6 +138,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
             favModel.setKey(coffeeModel.getKey());
             favModel.setName(coffeeModel.getName());
             favModel.setPrices(coffeeModel.getPrices());
+            favModel.setImgUrl(coffeeModel.getImgUrl());
 
             userFavs.child(coffeeModel.getKey())
               .setValue(favModel)
@@ -188,6 +189,7 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
             cartModel.setKey(coffeeModel.getKey());
             cartModel.setName(coffeeModel.getName());
             cartModel.setPrices(coffeeModel.getPrices());
+            cartModel.setImgUrl(coffeeModel.getImgUrl());
             cartModel.setQuantity(1);
 
             userCart.child(coffeeModel.getKey())

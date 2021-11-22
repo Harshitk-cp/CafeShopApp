@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
@@ -34,8 +35,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder> {
-  private Context context;
-  private List<FavModel> favModelList;
+  private final Context context;
+  private final List<FavModel> favModelList;
   private IFavLoadListener iFavLoadListener;
 
   public favAdapter(Context context, List<FavModel> favModelList, IFavLoadListener iFavLoadListener) {
@@ -55,6 +56,7 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
 
     holder.txtCoffeeNameFav.setText(new StringBuilder().append(favModelList.get(position).getName()));
     holder.txtPriceFav.setText(new StringBuilder("Rs.").append(favModelList.get(position).getPrices()));
+    Glide.with(holder.imgCoffeeImageFav.getContext()).load(favModelList.get(position).getImgUrl()).override(600, 700).centerCrop().into(holder.imgCoffeeImageFav);
 
     holder.txtRemoveFav.setOnClickListener(v -> {
       AlertDialog dialog = new AlertDialog.Builder(context)
@@ -105,6 +107,8 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
     TextView txtPriceFav;
     @BindView(R.id.txtRemoveFav)
     ImageView txtRemoveFav;
+    @BindView(R.id.imgCoffeeImageFav)
+      ImageView imgCoffeeImageFav;
 
     Unbinder unbinder;
 

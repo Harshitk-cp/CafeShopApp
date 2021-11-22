@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.harshit.cafeshopapp.R;
@@ -48,6 +49,8 @@ public class previewAdapter extends RecyclerView.Adapter<previewAdapter.MyPrevie
 
     holder.txtCoffeeNamePreview.setText(new StringBuilder().append(cartModelList.get(position).getName()));
     holder.txtPricePreview.setText(new StringBuilder("Rs.").append(cartModelList.get(position).getPrices()));
+    Glide.with(holder.imgCoffeeImagePreview.getContext()).load(cartModelList.get(position).getImgUrl()).override(600, 700).centerCrop().into(holder.imgCoffeeImagePreview);
+
   }
 
   @Override
@@ -61,6 +64,8 @@ public class previewAdapter extends RecyclerView.Adapter<previewAdapter.MyPrevie
     TextView txtCoffeeNamePreview;
     @BindView(R.id.txtPricePreview)
     TextView txtPricePreview;
+    @BindView(R.id.imgCoffeeImagePreview)
+      ImageView imgCoffeeImagePreview;
 
     Unbinder unbinder;
 
