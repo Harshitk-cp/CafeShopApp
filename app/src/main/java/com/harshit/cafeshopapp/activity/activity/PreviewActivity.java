@@ -28,7 +28,6 @@ import com.harshit.cafeshopapp.activity.adapter.previewAdapter;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
 import com.harshit.cafeshopapp.activity.listener.ICartLoadListener;
 import com.harshit.cafeshopapp.activity.model.CartModel;
-import com.harshit.cafeshopapp.activity.model.UserModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +63,7 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
     etStateInfo = findViewById(R.id.etStateInfo);
     etZipInfo = findViewById(R.id.etZipInfo);
     btnPlaceOrder = findViewById(R.id.btnPlaceOrder);
-    txtSubTotal = findViewById(R.id.txtSubTotal);
+    txtSubTotal = findViewById(R.id.txtTotal);
     txtTotal = findViewById(R.id.txtTotal);
 
     Toolbar actionBarCart = findViewById(R.id.actionBarInfo);
