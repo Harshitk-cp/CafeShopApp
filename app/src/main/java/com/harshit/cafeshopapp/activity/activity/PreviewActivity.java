@@ -98,7 +98,7 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
 
 
 
-          Toast.makeText(PreviewActivity.this, "your order was placed succesfully!!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(PreviewActivity.this, "your order was placed successfully!!", Toast.LENGTH_SHORT).show();
           Intent intent = new Intent(PreviewActivity.this, DashboardActivity.class);
           startActivity(intent);
           finish();

@@ -3,18 +3,15 @@ package com.harshit.cafeshopapp.activity.adapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -26,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.harshit.cafeshopapp.R;
 import com.harshit.cafeshopapp.activity.eventbus.updatecartEvent;
-import com.harshit.cafeshopapp.activity.fragments.FavFragment;
 import com.harshit.cafeshopapp.activity.fragments.HomeFragment;
 import com.harshit.cafeshopapp.activity.listener.IFavLoadListener;
 import com.harshit.cafeshopapp.activity.model.CartModel;
@@ -36,7 +32,6 @@ import com.harshit.cafeshopapp.activity.listener.IRecyclerViewClickListener;
 import com.harshit.cafeshopapp.activity.model.FavModel;
 
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -88,8 +83,15 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
         Window window = dialog.getWindow();
         window.setLayout(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         TextView txtDialogCoffeeDesc;
+        TextView txtDialogCoffeeName;
+
         txtDialogCoffeeDesc = dialog.findViewById(R.id.txtDialogCoffeeDesc);
-        txtDialogCoffeeDesc.setText(new StringBuilder().append(coffeeModelList.get(position).getName()));
+        txtDialogCoffeeName = dialog.findViewById(R.id.txtDialogCoffeeName);
+        ImageView imgDialogCoffeeImage = (ImageView) dialog.findViewById(R.id.imgDialogCoffeeImage);
+        txtDialogCoffeeDesc.setText(new StringBuilder().append(coffeeModelList.get(position).getDescription()));
+        txtDialogCoffeeName.setText(new StringBuilder().append(coffeeModelList.get(position).getName()));
+        Glide.with(imgDialogCoffeeImage.getContext()).load(coffeeModelList.get(position).getImgUrl()).override(700, 700).centerCrop().into(imgDialogCoffeeImage);
+
         return true;
       }
     });

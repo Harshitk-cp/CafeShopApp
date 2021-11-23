@@ -56,7 +56,7 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.MyCartViewHold
     holder.txtCoffeeNameCart.setText(new StringBuilder().append(cartModelList.get(position).getName()));
     holder.txtPriceCart.setText(new StringBuilder("Rs.").append(cartModelList.get(position).getPrices()));
     holder.txtQuantityCart.setText(new StringBuilder().append(cartModelList.get(position).getQuantity()));
-    Glide.with(holder.imgCoffeeImageCart.getContext()).load(cartModelList.get(position).getImgUrl()).override(600, 700).centerCrop().into(holder.imgCoffeeImageCart);
+    Glide.with(holder.imgCoffeeImageCart.getContext()).load(cartModelList.get(position).getImgUrl()).override(700, 700).centerCrop().into(holder.imgCoffeeImageCart);
 
     holder.btnMinusQuantity.setOnClickListener(v -> {
       minusCartItem(holder, cartModelList.get(position));

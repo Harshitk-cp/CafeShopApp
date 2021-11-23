@@ -56,7 +56,7 @@ public class favAdapter extends RecyclerView.Adapter<favAdapter.MyFavViewHolder>
 
     holder.txtCoffeeNameFav.setText(new StringBuilder().append(favModelList.get(position).getName()));
     holder.txtPriceFav.setText(new StringBuilder("Rs.").append(favModelList.get(position).getPrices()));
-    Glide.with(holder.imgCoffeeImageFav.getContext()).load(favModelList.get(position).getImgUrl()).override(600, 700).centerCrop().into(holder.imgCoffeeImageFav);
+    Glide.with(holder.imgCoffeeImageFav.getContext()).load(favModelList.get(position).getImgUrl()).override(700, 700).centerCrop().into(holder.imgCoffeeImageFav);
 
     holder.txtRemoveFav.setOnClickListener(v -> {
       AlertDialog dialog = new AlertDialog.Builder(context)
