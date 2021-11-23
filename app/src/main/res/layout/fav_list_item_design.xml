@@ -73,6 +73,7 @@
                 android:layout_height="27dp"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
+               android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_baseline_cancel_24"
                 app:tint="@color/primary"
                 android:tag="unliked" />

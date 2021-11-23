@@ -3,6 +3,8 @@ package com.harshit.cafeshopapp.activity.adapter;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +35,7 @@ import com.harshit.cafeshopapp.activity.listener.IRecyclerViewClickListener;
 import com.harshit.cafeshopapp.activity.model.FavModel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +57,8 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
     this.iCartLoadListener = iCartLoadListener;
     this.iFavLoadListener = iFavLoadListener;
   }
+
+
 
   @NonNull
   @Override
@@ -101,7 +107,9 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
       @Override
       public void onClick(View view) {
 
+
         addToFavs(coffeeModelList.get(position));
+
       }
     });
 
@@ -119,6 +127,8 @@ public class coffeeAdapter extends RecyclerView.Adapter<coffeeAdapter.MyCoffeeVi
   }
 
   private void addToFavs(CoffeeModel coffeeModel) {
+
+
 
     DatabaseReference userFavs = FirebaseDatabase
       .getInstance()
