@@ -96,6 +96,7 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
       public void onClick(View view) {
 
 
+        deleteAllCart();
 
           Toast.makeText(PreviewActivity.this, "your order was placed successfully!!", Toast.LENGTH_SHORT).show();
           Intent intent = new Intent(PreviewActivity.this, DashboardActivity.class);
@@ -106,7 +107,15 @@ public class PreviewActivity extends AppCompatActivity implements ICartLoadListe
     });
   }
 
+  private void deleteAllCart() {
 
+    FirebaseDatabase.getInstance()
+      .getReference("cart")
+      .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+      .removeValue()
+      .addOnSuccessListener(aVoid -> EventBus.getDefault().postSticky(new updatecartEvent()));
+
+  }
 
   private void loadPreviewFromFirebase() {
     List<CartModel> cartModels = new ArrayList<>();
